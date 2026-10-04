@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 180" width="100%" height="100%">
+  <defs>
+    <!-- Ocean Gradient for Globe -->
+    <radialGradient id="globeBlue" cx="40%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#2563EB" />
+      <stop offset="60%" stop-color="#1D4ED8" />
+      <stop offset="100%" stop-color="#1E3A8A" />
+    </radialGradient>
+    
+    <!-- Gold / Yellow continents gradient -->
+    <linearGradient id="continentGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE047" />
+      <stop offset="50%" stop-color="#EAB308" />
+      <stop offset="100%" stop-color="#CA8A04" />
+    </linearGradient>
+
+    <!-- Clip path to keep continents precisely inside globe circle -->
+    <clipPath id="globeClip">
+      <circle cx="95" cy="80" r="50" />
+    </clipPath>
+  </defs>
+
+  <!-- Left Side: Red Border Box -->
+  <rect x="12" y="18" width="166" height="126" fill="#FFFFFF" stroke="#DC2626" stroke-width="4.5" />
+
+  <!-- Inside Red Box: Globe -->
+  <g clip-path="url(#globeClip)">
+    <!-- Blue Ocean Sphere -->
+    <circle cx="95" cy="80" r="50" fill="url(#globeBlue)" />
+
+    <!-- Continents Landmass Shapes -->
+    <!-- North America & Greenland -->
+    <path d="M58 55 C62 48, 70 45, 78 48 C85 52, 90 60, 85 68 C80 75, 70 78, 62 70 Z" fill="url(#continentGold)" />
+    <path d="M82 40 C88 38, 96 40, 94 46 C90 48, 84 46, 82 40 Z" fill="url(#continentGold)" />
+    <!-- South America -->
+    <path d="M78 78 C88 80, 98 88, 92 105 C86 118, 75 125, 72 115 C70 102, 72 88, 78 78 Z" fill="url(#continentGold)" />
+    <!-- Eurasia / Asia & Africa -->
+    <path d="M102 45 C115 42, 135 48, 140 60 C138 72, 125 78, 115 72 C108 68, 102 55, 102 45 Z" fill="url(#continentGold)" />
+    <path d="M105 75 C120 72, 132 85, 128 102 C122 118, 110 120, 105 108 C102 95, 100 82, 105 75 Z" fill="url(#continentGold)" />
+    <path d="M130 90 C138 88, 145 95, 142 105 C135 110, 128 100, 130 90 Z" fill="url(#continentGold)" />
+
+    <!-- Latitude lines -->
+    <ellipse cx="95" cy="80" rx="50" ry="16" fill="none" stroke="#FFFFFF" stroke-width="1.2" stroke-opacity="0.65" />
+    <ellipse cx="95" cy="62" rx="42" ry="11" fill="none" stroke="#FFFFFF" stroke-width="1.2" stroke-opacity="0.65" />
+    <ellipse cx="95" cy="98" rx="42" ry="11" fill="none" stroke="#FFFFFF" stroke-width="1.2" stroke-opacity="0.65" />
+    <!-- Longitude lines -->
+    <ellipse cx="95" cy="80" rx="22" ry="50" fill="none" stroke="#FFFFFF" stroke-width="1.2" stroke-opacity="0.65" />
+    <line x1="95" y1="30" x2="95" y2="130" stroke="#FFFFFF" stroke-width="1.2" stroke-opacity="0.65" />
+    <line x1="45" y1="80" x2="145" y2="80" stroke="#FFFFFF" stroke-width="1.2" stroke-opacity="0.65" />
+  </g>
+
+  <!-- Outside Globe Outline -->
+  <circle cx="95" cy="80" r="50" fill="none" stroke="#0F2038" stroke-width="1.5" />
+
+  <!-- Inside Red Box: SEA Typography -->
+  <text x="95" y="136" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="25" fill="#0A1E7A" letter-spacing="4">
+    SEA
+  </text>
+
+  <!-- Under Red Box: Bridge to Lead -->
+  <text x="95" y="162" text-anchor="middle" font-family="'Times New Roman', Times, Georgia, serif" font-weight="bold" font-size="16" fill="#0A1E7A">
+    Bridge to Lead
+  </text>
+
+  <!-- Right Side: SRIMANASA Brand Typography -->
+  <text x="195" y="94" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="52" fill="#0A1E7A" letter-spacing="1.5">
+    SRIMANASA
+  </text>
+
+  <!-- Red Accent Divider Line -->
+  <rect x="195" y="105" width="335" height="5" fill="#DC2626" rx="1.5" />
+
+  <!-- Educational Academy Subtitle -->
+  <text x="196" y="134" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="23" fill="#0A1E7A" letter-spacing="4.5">
+    Educational Academy
+  </text>
+</svg>

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <radialGradient id="favGlobe" cx="40%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#2563EB" />
+      <stop offset="60%" stop-color="#1D4ED8" />
+      <stop offset="100%" stop-color="#1E3A8A" />
+    </radialGradient>
+    <linearGradient id="favGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE047" />
+      <stop offset="100%" stop-color="#CA8A04" />
+    </linearGradient>
+    <clipPath id="favClip">
+      <circle cx="50" cy="40" r="34" />
+    </clipPath>
+  </defs>
+
+  <!-- Red Border Box Badge -->
+  <rect x="3" y="3" width="94" height="94" rx="8" fill="#FFFFFF" stroke="#DC2626" stroke-width="5" />
+
+  <!-- Clipped Globe -->
+  <g clip-path="url(#favClip)">
+    <circle cx="50" cy="40" r="34" fill="url(#favGlobe)" />
+    <!-- Continents -->
+    <path d="M26 30 C30 25, 36 24, 42 27 C46 32, 44 38, 38 41 C32 44, 27 40, 26 30 Z" fill="url(#favGold)" />
+    <path d="M52 24 C56 22, 64 25, 68 32 C66 38, 58 42, 54 36 Z" fill="url(#favGold)" />
+    <path d="M38 46 C44 44, 48 54, 42 64 C36 62, 36 50, 38 46 Z" fill="url(#favGold)" />
+    <path d="M54 44 C62 42, 72 48, 70 58 C64 64, 56 60, 54 44 Z" fill="url(#favGold)" />
+    <!-- Grid -->
+    <ellipse cx="50" cy="40" rx="34" ry="12" fill="none" stroke="#FFFFFF" stroke-width="1.2" stroke-opacity="0.7" />
+    <ellipse cx="50" cy="40" rx="14" ry="34" fill="none" stroke="#FFFFFF" stroke-width="1.2" stroke-opacity="0.7" />
+  </g>
+  <circle cx="50" cy="40" r="34" fill="none" stroke="#0F2038" stroke-width="1.5" />
+
+  <!-- SEA Text -->
+  <text x="50" y="86" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-size="18" fill="#0A1E7A" letter-spacing="2">
+    SEA
+  </text>
+</svg>
