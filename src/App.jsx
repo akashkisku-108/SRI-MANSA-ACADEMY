@@ -1,6 +1,8 @@
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
+import { ClickSoundProvider } from './components/ui/ClickSoundProvider';
+import { ThemeProvider } from './context/ThemeContext';
 
 // Lazy-loaded route pages for code-splitting and instant initial page load
 const Home = lazy(() => import('./pages/Home'));
@@ -42,23 +44,27 @@ function PageFallbackLoader() {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Suspense fallback={<PageFallbackLoader />}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          {/* Temporarily locked sections showing dedicated Coming Soon state */}
-          <Route path="/courses" element={<ComingSoon sectionKey="programs" />} />
-          <Route path="/programs" element={<ComingSoon sectionKey="programs" />} />
-          <Route path="/faculty" element={<ComingSoon sectionKey="faculty" />} />
-          <Route path="/results" element={<ComingSoon sectionKey="results" />} />
-          <Route path="/gallery" element={<ComingSoon sectionKey="gallery" />} />
-          
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/admission" element={<Admission />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Suspense>
-    </BrowserRouter>
+    <ThemeProvider>
+      <BrowserRouter>
+        {/* Global click sound & haptic provider */}
+        <ClickSoundProvider />
+        <Suspense fallback={<PageFallbackLoader />}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            {/* Temporarily locked sections showing dedicated Coming Soon state */}
+            <Route path="/courses" element={<ComingSoon sectionKey="programs" />} />
+            <Route path="/programs" element={<ComingSoon sectionKey="programs" />} />
+            <Route path="/faculty" element={<Faculty />} />
+            <Route path="/results" element={<ComingSoon sectionKey="results" />} />
+            <Route path="/gallery" element={<ComingSoon sectionKey="gallery" />} />
+            
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/admission" element={<Admission />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }

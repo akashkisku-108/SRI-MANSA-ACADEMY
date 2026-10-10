@@ -7,6 +7,61 @@
     --color-primary-900: #122033;
     --color-accent-500: #C9A436;
     --color-terracotta-500: #C86244;
+    
+    /* Theme tokens: Light mode subtle 7% darkening */
+    --hover-shade: rgba(18, 32, 51, 0.07);
+    --hover-shade-active: rgba(18, 32, 51, 0.13);
+    --hover-border-highlight: transparent;
+    --hover-brightness: 0.94;
+    --section-hover-brightness: 0.98;
+  }
+
+  html.dark, :root[data-theme="dark"], body.dark {
+    --color-primary-900: #8EA4C2;
+    --color-accent-500: #E0C168;
+    --color-terracotta-500: #DE7F64;
+    
+    /* Night / Dark mode: soft surface lightening (7-8%) + thin warm border highlight so elements clearly stand out */
+    --hover-shade: rgba(255, 255, 255, 0.08);
+    --hover-shade-active: rgba(255, 255, 255, 0.14);
+    --hover-border-highlight: rgba(200, 98, 68, 0.35);
+    --hover-brightness: 1.08;
+    --section-hover-brightness: 1.03;
+  }
+
+  /* Dark mode root colors */
+  html.dark body, :root[data-theme="dark"] body {
+    color: #E2E8F0;
+    background-color: #0B131E;
+  }
+
+  html.dark .bg-surface-warm, :root[data-theme="dark"] .bg-surface-warm {
+    background-color: #0F1A28;
+  }
+
+  html.dark .bg-surface-parchment, :root[data-theme="dark"] .bg-surface-parchment {
+    background-color: #122033;
+  }
+
+  html.dark .bg-white, :root[data-theme="dark"] .bg-white {
+    background-color: #132236;
+    color: #F1F5F9;
+  }
+
+  html.dark .text-neutral-800, :root[data-theme="dark"] .text-neutral-800,
+  html.dark .text-neutral-900, :root[data-theme="dark"] .text-neutral-900,
+  html.dark .text-primary-950, :root[data-theme="dark"] .text-primary-950 {
+    color: #F8FAFC;
+  }
+
+  html.dark .text-neutral-600, :root[data-theme="dark"] .text-neutral-600,
+  html.dark .text-neutral-700, :root[data-theme="dark"] .text-neutral-700 {
+    color: #CBD5E1;
+  }
+
+  html.dark .border-neutral-200, :root[data-theme="dark"] .border-neutral-200,
+  html.dark .border-neutral-200\/90, :root[data-theme="dark"] .border-neutral-200\/90 {
+    border-color: rgba(255, 255, 255, 0.12);
   }
 
   html {
@@ -72,3 +127,125 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #94B4D8;
 }
+
+/* Smooth Hover Darkening Interaction (6% to 10% darkening without layout shift) */
+.hover-darken,
+.card-hover,
+.hover-shade,
+article,
+table tr,
+button:not(:disabled),
+a[href],
+[role="button"] {
+  position: relative;
+  transition: background-color 200ms ease, box-shadow 200ms ease;
+}
+
+/* Pseudo-element dark overlay for elements with explicit backgrounds/images */
+.hover-darken-overlay,
+.card-hover,
+article,
+.rounded-card {
+  position: relative;
+  isolation: isolate;
+}
+
+.hover-darken-overlay::after,
+.card-hover::after,
+article::after,
+.rounded-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-color: transparent;
+  pointer-events: none;
+  transition: background-color 200ms ease;
+  z-index: 10;
+}
+
+/* Exclude inputs, textarea, and navbar sticky root from darkening overlay */
+input,
+textarea,
+select,
+nav.sticky,
+.no-hover-darken,
+.no-hover-darken::after {
+  background-color: transparent !important;
+  pointer-events: auto;
+}
+
+/* Desktop Hover Interaction (Darkens in Light Mode, Soft Lightening + Border Glow in Dark Mode) */
+@media (hover: hover) and (pointer: fine) {
+  .hover-darken-overlay:hover::after,
+  .card-hover:hover::after,
+  article:hover::after,
+  .rounded-card:hover::after {
+    background-color: var(--hover-shade);
+    box-shadow: inset 0 0 0 1px var(--hover-border-highlight);
+  }
+
+  button:not(:disabled):hover:not(input):not(textarea),
+  a[href]:hover:not(input):not(textarea),
+  [role="button"]:hover,
+  table tr:hover {
+    background-color: var(--hover-shade);
+  }
+
+  /* When buttons or links have their own background color, shade slightly via filter */
+  button:not(:disabled):hover,
+  a[href].btn-hover-shade:hover {
+    filter: brightness(var(--hover-brightness));
+  }
+
+  /* Gallery images, course boxes, and cards smooth standout on hover */
+  .gallery-item:hover,
+  .course-box:hover,
+  .faq-item:hover {
+    filter: brightness(var(--hover-brightness));
+  }
+}
+
+/* Sections gentle shade on cursor entry */
+@media (hover: hover) and (pointer: fine) {
+  section.hover-darken-section {
+    transition: filter 250ms ease;
+  }
+  section.hover-darken-section:hover {
+    filter: brightness(var(--section-hover-brightness));
+  }
+}
+
+/* Mobile & Touch: brief darkening while pressed (:active) for ~150ms */
+@media (hover: none) or (pointer: coarse) {
+  .hover-darken-overlay:active::after,
+  .card-hover:active::after,
+  article:active::after,
+  .rounded-card:active::after {
+    background-color: var(--hover-shade-active);
+  }
+
+  button:not(:disabled):active,
+  a[href]:active,
+  [role="button"]:active {
+    filter: brightness(0.91);
+  }
+}
+
+/* Respect prefers-reduced-motion: instant shade change without transition animations */
+@media (prefers-reduced-motion: reduce) {
+  .hover-darken,
+  .card-hover,
+  .hover-shade,
+  article,
+  button,
+  a[href],
+  .hover-darken-overlay::after,
+  .card-hover::after,
+  article::after,
+  .rounded-card::after {
+    transition: none !important;
+  }
+}
+
+

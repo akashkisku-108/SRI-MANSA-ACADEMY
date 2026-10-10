@@ -9,13 +9,19 @@ import { Badge } from '../ui/Badge';
 export function FacultyCard({ faculty }) {
   // Map portrait images to faculty members
   const getFacultyPhoto = () => {
-    if (faculty.name.includes('Ramanathan') || faculty.subject === 'Physics') {
+    if (faculty.photo) {
+      return faculty.photo;
+    }
+    if (faculty.name.toLowerCase().includes('rishikesh')) {
+      return '/faculty-rishikesh.jpg';
+    }
+    if (faculty.name.includes('Ramanathan')) {
       return '/faculty-ramanathan.jpg';
     }
-    if (faculty.name.includes('Ananya') || faculty.subject === 'Mathematics') {
+    if (faculty.name.includes('Ananya')) {
       return '/faculty-ananya.jpg';
     }
-    if (faculty.name.includes('Murali') || faculty.subject === 'Chemistry') {
+    if (faculty.name.includes('Murali')) {
       return '/faculty-murali.jpg';
     }
     return null;

@@ -37,7 +37,7 @@ export function Section({
   return (
     <section
       id={id}
-      className={`relative scroll-mt-20 ${backgrounds[background] || backgrounds.warm} ${spacings[spacing] || spacings.normal} ${className}`}
+      className={`relative scroll-mt-20 hover-darken-section ${backgrounds[background] || backgrounds.warm} ${spacings[spacing] || spacings.normal} ${className}`}
       {...props}
     >
       {content}

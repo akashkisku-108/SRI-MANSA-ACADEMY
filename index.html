@@ -14,10 +14,22 @@
     <meta property="og:description" content="Empowering young minds with conceptual clarity, personalized mentorship, and proven competitive academic results." />
     <meta property="og:image" content="/og-image.png" />
 
-    <!-- Google Fonts: DM Serif Display + Plus Jakarta Sans + Noto Serif Tamil -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Noto+Serif+Tamil:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Prevent flash of incorrect theme on initial page load -->
+    <script>
+      (function() {
+        try {
+          var stored = localStorage.getItem('srimanasa_theme');
+          var isDark = stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          if (isDark) {
+            document.documentElement.classList.add('dark');
+            document.documentElement.setAttribute('data-theme', 'dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.setAttribute('data-theme', 'light');
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body class="bg-neutral-50 text-neutral-800 font-sans antialiased selection:bg-accent-200 selection:text-primary-950">
     <div id="root"></div>

@@ -168,3 +168,10 @@ export const enquiryService = {
 };
 ```
 No React components or hooks need to be touched when switching from mock data to real API endpoints.
+
+---
+
+## Attributions & Credits
+
+- Click sound: Computer Mouse Click 02 by Universfield, Pixabay.
+

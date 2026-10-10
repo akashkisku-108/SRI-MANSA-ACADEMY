@@ -3,12 +3,13 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 import { Menu, X, Phone, ArrowRight, Lock } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { Container } from '../ui/Container';
+import { ThemeToggleSwitch } from '../ui/ThemeToggleSwitch';
 
 const NAV_LINKS = [
   { name: 'Home', path: '/', isLocked: false },
   { name: 'About', path: '/about', isLocked: false },
   { name: 'Programs', path: '/courses', isLocked: true },
-  { name: 'Faculty', path: '/faculty', isLocked: true },
+  { name: 'Faculty', path: '/faculty', isLocked: false },
   { name: 'Results', path: '/results', isLocked: true },
   { name: 'Gallery', path: '/gallery', isLocked: true },
   { name: 'Contact', path: '/contact', isLocked: false },
@@ -154,8 +155,10 @@ export function Navbar() {
             })}
           </nav>
 
-          {/* Desktop Action Buttons */}
-          <div className="hidden lg:flex items-center gap-3">
+          {/* Desktop Action Buttons & Pill Theme Switch */}
+          <div className="hidden lg:flex items-center gap-4">
+            <ThemeToggleSwitch />
+
             <Button
               as={Link}
               to="/admission"
@@ -167,21 +170,25 @@ export function Navbar() {
             </Button>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            type="button"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden p-2.5 rounded-button text-neutral-700 hover:text-neutral-900 hover:bg-neutral-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-500 min-h-[44px] min-w-[44px] flex items-center justify-center"
-            aria-expanded={isMobileMenuOpen}
-            aria-controls="mobile-navigation"
-            aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
-          >
-            {isMobileMenuOpen ? (
-              <X className="w-6 h-6" aria-hidden="true" />
-            ) : (
-              <Menu className="w-6 h-6" aria-hidden="true" />
-            )}
-          </button>
+          {/* Mobile Right Controls: Pill Theme Switch + Menu Button */}
+          <div className="flex items-center gap-2.5 lg:hidden">
+            <ThemeToggleSwitch />
+
+            <button
+              type="button"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="p-2 rounded-button text-neutral-700 hover:text-neutral-900 hover:bg-neutral-100 dark:text-neutral-200 dark:hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-500 min-h-[40px] min-w-[40px] flex items-center justify-center"
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-navigation"
+              aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+            >
+              {isMobileMenuOpen ? (
+                <X className="w-6 h-6" aria-hidden="true" />
+              ) : (
+                <Menu className="w-6 h-6" aria-hidden="true" />
+              )}
+            </button>
+          </div>
         </Container>
       </header>
 

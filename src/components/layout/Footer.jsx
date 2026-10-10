@@ -47,7 +47,7 @@ export function Footer() {
                 { name: 'Home', path: '/', isLocked: false },
                 { name: 'Academic Philosophy', path: '/about', isLocked: false },
                 { name: 'Programs & Syllabus', path: '/courses', isLocked: true },
-                { name: 'Teaching Faculty', path: '/faculty', isLocked: true },
+                { name: 'Teaching Faculty', path: '/faculty', isLocked: false },
                 { name: 'Examination Results', path: '/results', isLocked: true },
                 { name: 'Campus Life & Gallery', path: '/gallery', isLocked: true },
                 { name: 'Campus Contact', path: '/contact', isLocked: false },
