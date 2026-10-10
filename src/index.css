@@ -248,4 +248,205 @@ nav.sticky,
   }
 }
 
+/* Scroll Reveal Animation: GPU-accelerated 24px slide-up and fade-in (600ms ease-out) */
+.reveal-init {
+  opacity: 0;
+  transform: translate3d(0, 24px, 0);
+  transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1), transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-visible {
+  opacity: 1 !important;
+  transform: translate3d(0, 0, 0) !important;
+}
+
+/* If JavaScript fails or prefers-reduced-motion is active, reveal immediately without animation */
+@media (prefers-reduced-motion: reduce) {
+  .reveal-init {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* ==========================================================================
+   Hero Entrance Animation Sequence (Runs once on first page load, < 2s total)
+   ========================================================================== */
+
+@keyframes heroWordReveal {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes heroElementFadeUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes heroImageEntrance {
+  0% {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes heroDemoButtonPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(200, 98, 68, 0.65);
+  }
+  50% {
+    box-shadow: 0 0 0 14px rgba(200, 98, 68, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 0 22px rgba(200, 98, 68, 0);
+  }
+}
+
+.hero-word-reveal {
+  display: inline-block;
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+  animation: heroWordReveal 500ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: opacity, transform;
+}
+
+.hero-fade-up {
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
+  animation: heroElementFadeUp 500ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: opacity, transform;
+}
+
+.hero-image-entrance {
+  opacity: 0;
+  transform: scale(0.96);
+  animation: heroImageEntrance 800ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: opacity, transform;
+}
+
+/* Single gentle pulse on Demo button: ~1s, forwards, no endless loop */
+.hero-btn-pulse {
+  animation: heroDemoButtonPulse 1000ms cubic-bezier(0.2, 0.8, 0.2, 1) 1.25s 1 forwards !important;
+}
+
+/* Fallback: If JavaScript is disabled or prefers-reduced-motion is enabled, show everything immediately */
+@media (prefers-reduced-motion: reduce) {
+  .hero-word-reveal,
+  .hero-fade-up,
+  .hero-image-entrance,
+  .hero-btn-pulse {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    box-shadow: none !important;
+  }
+}
+
+/* ==========================================================================
+   Form Success & Error Animations
+   ========================================================================== */
+
+/* 400ms Form Error Shake */
+@keyframes formErrorShake {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  15%, 45%, 75% {
+    transform: translate3d(-8px, 0, 0);
+  }
+  30%, 60%, 90% {
+    transform: translate3d(8px, 0, 0);
+  }
+}
+
+.animate-form-shake {
+  animation: formErrorShake 400ms cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  will-change: transform;
+}
+
+/* 700ms SVG Stroke Draw Animation for Checkmark & Circle */
+@keyframes drawCircle {
+  0% {
+    stroke-dashoffset: 151; /* 2 * PI * 24 */
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes drawCheckmark {
+  0% {
+    stroke-dashoffset: 45;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.success-draw-circle {
+  stroke-dasharray: 151;
+  stroke-dashoffset: 151;
+  animation: drawCircle 700ms cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.success-draw-check {
+  stroke-dasharray: 45;
+  stroke-dashoffset: 45;
+  animation: drawCheckmark 500ms cubic-bezier(0.65, 0, 0.45, 1) 350ms forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-form-shake {
+    animation: none !important;
+    transform: none !important;
+  }
+  .success-draw-circle,
+  .success-draw-check {
+    stroke-dashoffset: 0 !important;
+    animation: none !important;
+  }
+}
+
+/* ==========================================================================
+   Scroll Progress Bar (Brand Primary to Accent Gradient)
+   ========================================================================== */
+
+.scroll-progress-bar {
+  background: linear-gradient(90deg, #122033 0%, #C86244 55%, #C9A436 100%);
+  transition: transform 60ms linear;
+}
+
+/* Dark / Night Mode Gradient */
+html.dark .scroll-progress-bar,
+:root[data-theme="dark"] .scroll-progress-bar {
+  background: linear-gradient(90deg, #3B82F6 0%, #DE7F64 55%, #E0C168 100%);
+}
+
+/* Respect prefers-reduced-motion: remove smoothing transition */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-progress-bar {
+    transition: none !important;
+  }
+}
+
+
+
+
 

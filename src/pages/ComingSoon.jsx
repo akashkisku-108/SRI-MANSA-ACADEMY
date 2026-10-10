@@ -4,6 +4,7 @@ import { Home, Lock, Sparkles, BookOpen, Users, Trophy, Image as ImageIcon } fro
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { PageLayout } from '../components/layout/PageLayout';
 import { Button } from '../components/ui/Button';
+import { Reveal } from '../components/ui/Reveal';
 import { Container } from '../components/ui/Container';
 
 const SECTION_CONFIG = {
@@ -56,7 +57,7 @@ export default function ComingSoon({ sectionKey = 'programs' }) {
         <div className="absolute inset-0 bg-kolam-subtle opacity-35 pointer-events-none" aria-hidden="true" />
 
         <Container className="relative z-10">
-          <div className="max-w-xl mx-auto">
+          <Reveal className="max-w-xl mx-auto">
             {/* Lock Pill Badge */}
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-parchment border border-terracotta-200/80 text-terracotta-800 text-xs font-semibold uppercase tracking-widest mb-6 shadow-xs">
               <Lock className="w-3.5 h-3.5 text-terracotta-600" aria-hidden="true" />
@@ -129,7 +130,7 @@ export default function ComingSoon({ sectionKey = 'programs' }) {
                 Contact Admissions Office
               </Button>
             </div>
-          </div>
+          </Reveal>
         </Container>
       </section>
     </PageLayout>

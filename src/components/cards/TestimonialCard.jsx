@@ -6,11 +6,15 @@ import { Badge } from '../ui/Badge';
 /**
  * TestimonialCard showcasing real student and parent reviews.
  */
-export function TestimonialCard({ testimonial }) {
+export function TestimonialCard({ testimonial, index = 0 }) {
   const isStudent = testimonial.role === 'student';
 
   return (
-    <Card className="flex flex-col justify-between h-full relative border-neutral-200 hover:border-primary-300">
+    <Card
+      reveal={true}
+      staggerIndex={index}
+      className="flex flex-col justify-between h-full relative border-neutral-200 hover:border-primary-300"
+    >
       <div>
         {/* Header with Role Badge and Star Rating */}
         <div className="flex items-center justify-between mb-4">

@@ -107,8 +107,8 @@ export default function Courses() {
           <p className="text-center text-red-600">{error}</p>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {courses.map((course) => (
-              <CourseCard key={course.id} course={course} />
+            {courses.map((course, index) => (
+              <CourseCard key={course.id} course={course} index={index} />
             ))}
           </div>
         )}

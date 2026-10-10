@@ -10,7 +10,69 @@ import { Card } from '../components/ui/Card';
 import { TableRowSkeleton, CardSkeleton } from '../components/ui/Skeleton';
 import { EmptyState } from '../components/ui/EmptyState';
 import { Container } from '../components/ui/Container';
-import { useResults } from '../hooks/useResults';
+import { AnimatedCounter } from '../components/ui/AnimatedCounter';
+
+// Helper to parse metric prefix, number and suffix from strings like 'AIR 48', '99.4%', '184', '710 / 720'
+function renderStatCounter(valStr, idx) {
+  const str = String(valStr).trim();
+
+  // Pattern: AIR 48
+  if (/^AIR\s+\d+$/i.test(str)) {
+    const num = parseInt(str.replace(/[^0-9]/g, ''), 10);
+    return (
+      <AnimatedCounter
+        prefix="AIR "
+        value={num}
+        delay={idx * 150}
+        duration={2000}
+      />
+    );
+  }
+
+  // Pattern: 99.4%
+  if (/^\d+(\.\d+)?%$/.test(str)) {
+    const num = parseFloat(str.replace('%', ''));
+    return (
+      <AnimatedCounter
+        value={num}
+        suffix="%"
+        decimals={1}
+        delay={idx * 150}
+        duration={2000}
+      />
+    );
+  }
+
+  // Pure integer e.g. 184
+  if (/^\d+$/.test(str)) {
+    return (
+      <AnimatedCounter
+        value={parseInt(str, 10)}
+        delay={idx * 150}
+        duration={2000}
+      />
+    );
+  }
+
+  // Score fractions like '710 / 720'
+  if (/^(\d+)\s*\/\s*(\d+)$/.test(str)) {
+    const matches = str.match(/^(\d+)\s*\/\s*(\d+)$/);
+    const numerator = parseInt(matches[1], 10);
+    const denominator = matches[2];
+    return (
+      <span className="inline-flex items-baseline">
+        <AnimatedCounter
+          value={numerator}
+          delay={idx * 150}
+          duration={2000}
+        />
+        <span className="text-neutral-500 font-sans font-normal text-lg sm:text-xl ml-1.5">/ {denominator}</span>
+      </span>
+    );
+  }
+
+  return <span>{str}</span>;
+}
 
 const YEARS = ['All', '2024', '2023', '2022'];
 
@@ -59,7 +121,7 @@ export default function Results() {
                   </div>
                   <div className="text-2xl sm:text-3xl font-serif font-bold text-primary-950 flex items-center gap-2">
                     <Trophy className="w-5 h-5 text-accent-600 shrink-0" aria-hidden="true" />
-                    <span>{stat.value}</span>
+                    {renderStatCounter(stat.value, idx)}
                   </div>
                 </div>
                 <p className="text-xs text-accent-800 font-medium mt-3 pt-3 border-t border-neutral-100">
@@ -90,8 +152,8 @@ export default function Results() {
             {results
               .filter((r) => r.isFeatured)
               .slice(0, 4)
-              .map((res) => (
-                <ResultCard key={res.id} result={res} />
+              .map((res, index) => (
+                <ResultCard key={res.id} result={res} index={index} />
               ))}
           </div>
         )}

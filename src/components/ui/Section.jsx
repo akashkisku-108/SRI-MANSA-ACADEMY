@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container } from './Container';
+import { useScrollReveal } from './Reveal';
 
 /**
  * Semantic Section container with alternating backgrounds for rhythm.
@@ -12,8 +13,11 @@ export function Section({
   className = '',
   containerClassName = '',
   withContainer = true,
+  reveal = true,
   ...props
 }) {
+  const [sectionRef, isRevealed] = useScrollReveal();
+
   const backgrounds = {
     warm: 'bg-surface-warm text-neutral-800',
     white: 'bg-white text-neutral-800',
@@ -36,8 +40,11 @@ export function Section({
 
   return (
     <section
+      ref={reveal ? sectionRef : undefined}
       id={id}
-      className={`relative scroll-mt-20 hover-darken-section ${backgrounds[background] || backgrounds.warm} ${spacings[spacing] || spacings.normal} ${className}`}
+      className={`relative scroll-mt-20 hover-darken-section ${
+        reveal ? `reveal-init ${isRevealed ? 'reveal-visible' : ''}` : ''
+      } ${backgrounds[background] || backgrounds.warm} ${spacings[spacing] || spacings.normal} ${className}`}
       {...props}
     >
       {content}

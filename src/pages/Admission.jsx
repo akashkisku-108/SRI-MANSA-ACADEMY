@@ -15,6 +15,7 @@ import { Section } from '../components/ui/Section';
 import { FormField, Input, Select, Textarea } from '../components/ui/FormField';
 import { Button } from '../components/ui/Button';
 import { Container } from '../components/ui/Container';
+import { FormSuccessPanel } from '../components/ui/FormSuccessPanel';
 import { useCourses } from '../hooks/useCourses';
 import { enquiryService } from '../services/enquiryService';
 import { validateEnquiryForm, validateSingleField } from '../utils/validators';
@@ -57,6 +58,7 @@ export default function Admission() {
   const [touched, setTouched] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionResult, setSubmissionResult] = useState(null);
+  const [isShaking, setIsShaking] = useState(false);
 
   // Field refs for moving focus to first invalid field
   const fieldRefs = {
@@ -114,6 +116,11 @@ export default function Admission() {
     ? courses.filter((c) => c.classCategory === formData.standard || c.standardLabel?.includes(formData.standard))
     : courses;
 
+  const triggerShake = () => {
+    setIsShaking(true);
+    setTimeout(() => setIsShaking(false), 450);
+  };
+
   // Handle Form Submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -125,9 +132,10 @@ export default function Admission() {
     const validationErrors = validateEnquiryForm(formData);
     setErrors(validationErrors);
 
-    // If there are errors, focus the first invalid field
+    // If there are errors, focus the first invalid field and shake
     const errorKeys = Object.keys(validationErrors);
     if (errorKeys.length > 0) {
+      triggerShake();
       const firstErrorField = errorKeys[0];
       const targetRef = fieldRefs[firstErrorField]?.current;
       if (targetRef) {
@@ -149,6 +157,7 @@ export default function Admission() {
       const result = await enquiryService.submit(payload);
       setSubmissionResult(result);
     } catch (err) {
+      triggerShake();
       setErrors((prev) => ({ ...prev, submit: err.message || 'Submission failed. Please try again.' }));
     } finally {
       setIsSubmitting(false);
@@ -196,57 +205,27 @@ export default function Admission() {
           
           {/* Left Column: Form or Success Card (7 cols) */}
           <div className="lg:col-span-7">
-            <div className="bg-white p-7 sm:p-9 rounded-card border border-neutral-200/90 shadow-card">
+            <div className={`bg-white p-7 sm:p-9 rounded-card border border-neutral-200/90 shadow-card transition-all duration-300 ${isShaking ? 'animate-form-shake' : ''}`}>
               {submissionResult ? (
-                /* Clear Success State */
-                <div className="text-center py-6 space-y-6">
-                  <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto shadow-inner">
-                    <CheckCircle2 className="w-10 h-10" aria-hidden="true" />
-                  </div>
-
-                  <div>
-                    <span className="text-xs font-bold text-accent-700 uppercase tracking-widest block mb-1">
-                      Enquiry Registered
-                    </span>
-                    <h2 className="text-2xl sm:text-3xl font-serif font-bold text-primary-950 mb-2">
-                      Thank You! We'll Contact You Shortly.
-                    </h2>
-                    <p className="text-sm text-neutral-600 max-w-md mx-auto leading-relaxed">
-                      Your admission enquiry has been successfully logged with our senior academic counselling panel in Ashok Nagar, Chennai.
-                    </p>
-                  </div>
-
-                  {/* Reference ID Badge */}
-                  <div className="bg-surface-warm p-4 rounded-lg border border-neutral-200 max-w-md mx-auto text-left space-y-1">
-                    <div className="flex items-center justify-between text-xs text-neutral-500">
-                      <span>Enquiry Reference Number:</span>
-                      <span className="font-mono font-bold text-primary-950 text-sm">
-                        {submissionResult.referenceId}
-                      </span>
+                /* Smooth Animated Success Panel */
+                <FormSuccessPanel
+                  title="Thank you!"
+                  message="We have received your details. Our team will call you shortly."
+                  referenceId={submissionResult.referenceId}
+                  onReset={handleResetForm}
+                  buttonText="Send another enquiry"
+                  additionalInfo={
+                    <div className="pt-2">
+                      <a
+                        href="tel:+917397689062"
+                        className="text-xs text-primary-800 dark:text-accent-400 font-semibold hover:underline inline-flex items-center gap-1.5 py-1 px-3"
+                      >
+                        <PhoneCall className="w-4 h-4 text-terracotta-700 dark:text-terracotta-400" aria-hidden="true" />
+                        Immediate Admissions Assistance: +91 73976 89062
+                      </a>
                     </div>
-                    <div className="flex items-center justify-between text-xs text-neutral-500">
-                      <span>Assigned Counsellor Response:</span>
-                      <span className="text-emerald-800 font-semibold">Within 24 Working Hours</span>
-                    </div>
-                  </div>
-
-                  <div className="pt-4 border-t border-neutral-100 flex flex-col sm:flex-row items-center justify-center gap-3">
-                    <Button
-                      variant="primary"
-                      size="md"
-                      onClick={handleResetForm}
-                    >
-                      Submit Another Enquiry
-                    </Button>
-                    <a
-                      href="tel:+917397689062"
-                      className="text-xs text-primary-800 font-semibold hover:underline flex items-center gap-1.5 py-2 px-3"
-                    >
-                      <PhoneCall className="w-4 h-4 text-terracotta-700" aria-hidden="true" />
-                      Immediate Assistance: +91 73976 89062
-                    </a>
-                  </div>
-                </div>
+                  }
+                />
               ) : (
                 /* Enquiry Form */
                 <>

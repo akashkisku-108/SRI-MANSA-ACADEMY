@@ -2,11 +2,16 @@ import React from 'react';
 import { Trophy, Award, Building } from 'lucide-react';
 import { Card } from '../ui/Card';
 import { Badge } from '../ui/Badge';
+import { useScrollReveal } from '../ui/Reveal';
 
 /**
  * ResultCard component for high-achieving student rank cards.
  */
-export function ResultCard({ result }) {
+export function ResultCard({ result, index = 0 }) {
+  const [cardRef, isRevealed] = useScrollReveal();
+  const cappedIndex = Math.min(6, Math.max(0, index));
+  const staggerDelay = cappedIndex * 80;
+
   // Map portrait to student record
   const getStudentPhoto = () => {
     if (result.studentName.includes('Aditya') || result.id === 'res-01') {
@@ -24,7 +29,15 @@ export function ResultCard({ result }) {
   const photo = getStudentPhoto();
 
   return (
-    <div className="flex flex-col justify-between h-full bg-white rounded-card border border-neutral-200/90 hover:border-neutral-400 transition-all duration-200 shadow-sm overflow-hidden">
+    <div
+      ref={cardRef}
+      className={`flex flex-col justify-between h-full bg-white rounded-card border border-neutral-200/90 hover:border-neutral-400 transition-all duration-200 shadow-sm overflow-hidden reveal-init ${
+        isRevealed ? 'reveal-visible' : ''
+      }`}
+      style={{
+        transitionDelay: `${staggerDelay}ms`,
+      }}
+    >
       <div>
         {/* Student Image & Exam Header */}
         <div className="relative aspect-[4/3] w-full overflow-hidden bg-neutral-100">

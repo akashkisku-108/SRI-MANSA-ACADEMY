@@ -1,5 +1,6 @@
 import React from 'react';
 import { Badge } from './Badge';
+import { useScrollReveal } from './Reveal';
 
 /**
  * Academic SectionHeading with eyebrow kicker, serif h2 heading, and supporting text.
@@ -13,11 +14,17 @@ export function SectionHeading({
   className = '',
   titleClassName = '',
 }) {
+  const [headingRef, isRevealed] = useScrollReveal();
   const isCentered = align === 'center';
   const isDark = theme === 'dark';
 
   return (
-    <div className={`mb-10 md:mb-14 ${isCentered ? 'text-center max-w-3xl mx-auto' : 'max-w-2xl'} ${className}`}>
+    <div
+      ref={headingRef}
+      className={`mb-10 md:mb-14 reveal-init ${isRevealed ? 'reveal-visible' : ''} ${
+        isCentered ? 'text-center max-w-3xl mx-auto' : 'max-w-2xl'
+      } ${className}`}
+    >
       {eyebrow && (
         <div className={`mb-2.5 ${isCentered ? 'flex justify-center' : ''}`}>
           <span className={`inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest ${

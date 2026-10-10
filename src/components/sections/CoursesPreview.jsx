@@ -7,6 +7,7 @@ import { Button } from '../ui/Button';
 import { CourseCard } from '../cards/CourseCard';
 import { CardSkeleton } from '../ui/Skeleton';
 import { useCourses } from '../../hooks/useCourses';
+import { Reveal } from '../ui/Reveal';
 
 export function CoursesPreview() {
   const { courses, loading } = useCourses('All');
@@ -42,8 +43,9 @@ export function CoursesPreview() {
             const photo = idx === 0 ? '/course-physics.jpg' : idx === 1 ? '/course-math.jpg' : '/course-neet.jpg';
 
             return (
-              <div
+              <Reveal
                 key={course.id}
+                staggerIndex={idx}
                 className={`rounded-card border transition-all duration-200 overflow-hidden ${
                   isFeatured
                     ? 'border-neutral-300 bg-surface-warm'
@@ -110,7 +112,7 @@ export function CoursesPreview() {
                   </div>
 
                 </div>
-              </div>
+              </Reveal>
             );
           })}
         </div>

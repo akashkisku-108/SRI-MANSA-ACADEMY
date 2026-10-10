@@ -4,6 +4,7 @@ import { SectionHeading } from '../ui/SectionHeading';
 import { TestimonialCard } from '../cards/TestimonialCard';
 import { CardSkeleton } from '../ui/Skeleton';
 import { useTestimonials } from '../../hooks/useTestimonials';
+import { Reveal } from '../ui/Reveal';
 
 export function TestimonialsSection() {
   const [activeFilter, setActiveFilter] = useState('all');
@@ -34,9 +35,10 @@ export function TestimonialsSection() {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {featuredQuotes.map((item) => (
-            <div
+          {featuredQuotes.map((item, index) => (
+            <Reveal
               key={item.id}
+              staggerIndex={index}
               className="bg-white p-6 sm:p-7 rounded-card border border-neutral-200/90 flex flex-col justify-between"
             >
               <div className="space-y-4">
@@ -63,7 +65,7 @@ export function TestimonialsSection() {
                   </span>
                 )}
               </div>
-            </div>
+            </Reveal>
           ))}
         </div>
       )}

@@ -4,11 +4,15 @@ import { Clock, Users, CheckCircle2, ArrowRight } from 'lucide-react';
 import { Card } from '../ui/Card';
 import { Badge } from '../ui/Badge';
 import { Button } from '../ui/Button';
+import { useScrollReveal } from '../ui/Reveal';
 
 /**
  * CourseCard component showcasing course details and direct enrolment action.
  */
-export function CourseCard({ course }) {
+export function CourseCard({ course, index = 0 }) {
+  const [cardRef, isRevealed] = useScrollReveal();
+  const cappedIndex = Math.min(6, Math.max(0, index));
+  const staggerDelay = cappedIndex * 80;
   const enquiryUrl = `/admission?course=${course.id}&standard=${encodeURIComponent(course.classCategory)}`;
 
   // Contextual subject image matching program
@@ -23,7 +27,15 @@ export function CourseCard({ course }) {
   };
 
   return (
-    <div className="flex flex-col justify-between h-full bg-white rounded-card border border-neutral-200/90 hover:border-neutral-400 transition-all duration-200 shadow-sm overflow-hidden group">
+    <div
+      ref={cardRef}
+      className={`flex flex-col justify-between h-full bg-white rounded-card border border-neutral-200/90 hover:border-neutral-400 transition-all duration-200 shadow-sm overflow-hidden group reveal-init ${
+        isRevealed ? 'reveal-visible' : ''
+      }`}
+      style={{
+        transitionDelay: `${staggerDelay}ms`,
+      }}
+    >
       <div>
         {/* Course Image Header with Institutional Category Strip */}
         <div className="relative aspect-[16/9] w-full overflow-hidden bg-neutral-100">

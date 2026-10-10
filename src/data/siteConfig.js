@@ -73,31 +73,35 @@ export const siteConfig = {
   stats: [
     {
       id: "stat-1",
-      label: "Academic Focus",
-      value: "Boards & Entrances",
-      suffix: "",
-      description: "CBSE, ICSE, State Board & JEE / NEET crash batches"
+      label: "Students Mentored",
+      value: "5000+",
+      numericValue: 5000,
+      suffix: "+",
+      description: "Across foundational board classes and competitive entrance programs"
     },
     {
       id: "stat-2",
-      label: "Classroom Attention",
-      value: "Personalized",
-      suffix: " Care",
-      description: "Periodical review and individual student guidance"
+      label: "Competitive Selections",
+      value: "200+",
+      numericValue: 200,
+      suffix: "+",
+      description: "Admitted into IITs, NITs, AIIMS, and premier medical colleges"
     },
     {
       id: "stat-3",
-      label: "Doubt Resolution",
-      value: "Daily",
-      suffix: " Slots",
-      description: "Dedicated daily doubt-clearing sessions with faculties"
+      label: "Years of Excellence",
+      value: "10+",
+      numericValue: 10,
+      suffix: "+",
+      description: "Continuous academic coaching and conceptual mentorship in Chennai"
     },
     {
       id: "stat-4",
-      label: "Curriculum Material",
-      value: "Exclusive",
-      suffix: " Sets",
-      description: "Well-researched, comprehensive course materials"
+      label: "Highest Score",
+      value: "99.4%",
+      numericValue: 99.4,
+      suffix: "%",
+      description: "Top board examination milestone & centum subject records"
     }
   ]
 };

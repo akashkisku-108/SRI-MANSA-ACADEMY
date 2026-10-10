@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
 import { ClickSoundProvider } from './components/ui/ClickSoundProvider';
+import { ScrollProgressBar } from './components/ui/ScrollProgressBar';
 import { ThemeProvider } from './context/ThemeContext';
 
 // Lazy-loaded route pages for code-splitting and instant initial page load
@@ -46,6 +47,8 @@ export default function App() {
   return (
     <ThemeProvider>
       <BrowserRouter>
+        {/* Scroll Progress Bar (3px fixed at top) */}
+        <ScrollProgressBar />
         {/* Global click sound & haptic provider */}
         <ClickSoundProvider />
         <Suspense fallback={<PageFallbackLoader />}>

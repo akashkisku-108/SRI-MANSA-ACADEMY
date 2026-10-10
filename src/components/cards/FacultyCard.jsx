@@ -2,11 +2,16 @@ import React from 'react';
 import { Award, GraduationCap, Briefcase } from 'lucide-react';
 import { Card } from '../ui/Card';
 import { Badge } from '../ui/Badge';
+import { useScrollReveal } from '../ui/Reveal';
 
 /**
  * FacultyCard component displaying academic credentials, experience, and bio.
  */
-export function FacultyCard({ faculty }) {
+export function FacultyCard({ faculty, index = 0 }) {
+  const [cardRef, isRevealed] = useScrollReveal();
+  const cappedIndex = Math.min(6, Math.max(0, index));
+  const staggerDelay = cappedIndex * 80;
+
   // Map portrait images to faculty members
   const getFacultyPhoto = () => {
     if (faculty.photo) {
@@ -30,7 +35,15 @@ export function FacultyCard({ faculty }) {
   const photo = getFacultyPhoto();
 
   return (
-    <div className="flex flex-col h-full bg-white rounded-card border border-neutral-200/90 hover:border-neutral-400 transition-all duration-200 shadow-sm overflow-hidden">
+    <div
+      ref={cardRef}
+      className={`flex flex-col h-full bg-white rounded-card border border-neutral-200/90 hover:border-neutral-400 transition-all duration-200 shadow-sm overflow-hidden reveal-init ${
+        isRevealed ? 'reveal-visible' : ''
+      }`}
+      style={{
+        transitionDelay: `${staggerDelay}ms`,
+      }}
+    >
       {/* Portrait Header */}
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-neutral-100">
         {photo ? (

@@ -23,47 +23,77 @@ export function Hero() {
               <span>SRIMANASA EDUCATIONAL ACADEMY · CHENNAI</span>
             </div>
 
-            {/* Editorial Headline with intentional line breaks */}
-            <h1 className="text-3xl sm:text-5xl lg:text-[3.25rem] font-serif text-primary-950 font-normal leading-[1.14] tracking-tight">
-              Building Strong Foundations.<br />
-              <span className="text-terracotta-700 italic font-serif">Creating Confident Achievers.</span>
+            {/* Editorial Headline with word-by-word accessible entrance animation */}
+            <h1
+              className="text-3xl sm:text-5xl lg:text-[3.25rem] font-serif text-primary-950 font-normal leading-[1.14] tracking-tight"
+              aria-label="Building Strong Foundations. Creating Confident Achievers."
+            >
+              <span className="block" aria-hidden="true">
+                <span className="hero-word-reveal" style={{ animationDelay: '0ms' }}>Building</span>{' '}
+                <span className="hero-word-reveal" style={{ animationDelay: '80ms' }}>Strong</span>{' '}
+                <span className="hero-word-reveal" style={{ animationDelay: '160ms' }}>Foundations.</span>
+              </span>
+              <span className="text-terracotta-700 italic font-serif block" aria-hidden="true">
+                <span className="hero-word-reveal" style={{ animationDelay: '240ms' }}>Creating</span>{' '}
+                <span className="hero-word-reveal" style={{ animationDelay: '320ms' }}>Confident</span>{' '}
+                <span className="hero-word-reveal" style={{ animationDelay: '400ms' }}>Achievers.</span>
+              </span>
             </h1>
 
             {/* Tamil Regional Kicker */}
-            <p className="text-xs text-neutral-500 font-tamil tracking-wide">
+            <p
+              className="text-xs text-neutral-500 font-tamil tracking-wide hero-fade-up"
+              style={{ animationDelay: '480ms' }}
+            >
               அசோக் நகர், சென்னை • தரமான கல்வி & தனிப்பயிற்சி
             </p>
 
             {/* Concise Human Supporting Text */}
-            <p className="text-base sm:text-lg text-neutral-700 leading-relaxed max-w-xl">
+            <p
+              className="text-base sm:text-lg text-neutral-700 leading-relaxed max-w-xl hero-fade-up"
+              style={{ animationDelay: '540ms' }}
+            >
               Concept-focused learning for school students, board examinations, and competitive entrance preparation. Holistic coaching, dedicated faculties, and daily personalized doubt clearance in Ashok Nagar.
             </p>
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
-              <Button
-                as={Link}
-                to="/courses"
-                variant="primary"
-                size="lg"
-                rightIcon={ArrowRight}
-                className="w-full sm:w-auto"
+              <div
+                className="hero-fade-up w-full sm:w-auto"
+                style={{ animationDelay: '660ms' }}
               >
-                Explore Programs
-              </Button>
-              <Button
-                as={Link}
-                to="/admission"
-                variant="secondary"
-                size="lg"
-                className="w-full sm:w-auto"
+                <Button
+                  as={Link}
+                  to="/admission"
+                  variant="primary"
+                  size="lg"
+                  rightIcon={ArrowRight}
+                  className="w-full sm:w-auto hero-btn-pulse"
+                >
+                  Book Free Demo Class
+                </Button>
+              </div>
+              <div
+                className="hero-fade-up w-full sm:w-auto"
+                style={{ animationDelay: '780ms' }}
               >
-                Talk to Admissions
-              </Button>
+                <Button
+                  as={Link}
+                  to="/courses"
+                  variant="secondary"
+                  size="lg"
+                  className="w-full sm:w-auto"
+                >
+                  Download Brochure
+                </Button>
+              </div>
             </div>
 
             {/* Clean Institutional Footnote with verified flyer pillars */}
-            <div className="pt-6 border-t border-neutral-200/80 grid grid-cols-3 gap-4 text-left">
+            <div
+              className="pt-6 border-t border-neutral-200/80 grid grid-cols-3 gap-4 text-left hero-fade-up"
+              style={{ animationDelay: '900ms' }}
+            >
               <div>
                 <span className="block font-serif text-lg sm:text-xl text-primary-950">Daily Batches</span>
                 <span className="text-[11px] text-neutral-500 leading-tight block">Mon to Sat Schedule</span>
@@ -81,7 +111,7 @@ export function Hero() {
 
           {/* Right Side: Editorial Large Photograph (6 cols) */}
           <div className="lg:col-span-6">
-            <div className="relative">
+            <div className="relative hero-image-entrance" style={{ animationDelay: '100ms' }}>
               {/* Crisp editorial photo frame */}
               <div className="rounded-card overflow-hidden border border-neutral-300 shadow-card bg-neutral-100">
                 <img

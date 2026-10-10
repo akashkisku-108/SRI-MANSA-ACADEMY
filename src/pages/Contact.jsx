@@ -16,10 +16,10 @@ import {
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { PageLayout } from '../components/layout/PageLayout';
 import { Section } from '../components/ui/Section';
-import { SectionHeading } from '../components/ui/SectionHeading';
 import { FormField, Input, Textarea } from '../components/ui/FormField';
 import { Button } from '../components/ui/Button';
 import { Container } from '../components/ui/Container';
+import { FormSuccessPanel } from '../components/ui/FormSuccessPanel';
 import { useSiteConfig } from '../hooks/useSiteConfig';
 import { createWhatsAppUrl } from '../utils/formatters';
 
@@ -49,6 +49,8 @@ export default function Contact() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isShaking, setIsShaking] = useState(false);
 
   const whatsappUrl = contact
     ? createWhatsAppUrl(contact.whatsappNumber, contact.whatsappDefaultMessage)
@@ -57,17 +59,45 @@ export default function Contact() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    if (errorMessage) setErrorMessage('');
+  };
+
+  const triggerShake = () => {
+    setIsShaking(true);
+    setTimeout(() => setIsShaking(false), 450);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Validate fields
+    if (!formData.name.trim() || !formData.phone.trim() || !formData.email.trim() || !formData.subject.trim() || !formData.message.trim()) {
+      setErrorMessage('Please fill in all required fields before submitting.');
+      triggerShake();
+      return;
+    }
+
+    // Basic email sanity
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
+      setErrorMessage('Please provide a valid email address.');
+      triggerShake();
+      return;
+    }
+
+    setErrorMessage('');
     setIsSubmitting(true);
+
     // Simulate network delay
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
-      setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
     }, 600);
+  };
+
+  const handleResetForm = () => {
+    setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+    setErrorMessage('');
+    setIsSubmitted(false);
   };
 
   return (
@@ -233,7 +263,7 @@ export default function Contact() {
 
           {/* Right Column: Contact Message Form (7 cols) */}
           <div className="lg:col-span-7">
-            <div className="bg-white p-8 rounded-card border border-neutral-200/90 shadow-card">
+            <div className={`bg-white p-8 rounded-card border border-neutral-200/90 shadow-card transition-all duration-300 ${isShaking ? 'animate-form-shake' : ''}`}>
               <h2 className="font-serif font-bold text-2xl text-primary-950 mb-2">
                 Send Us a Message
               </h2>
@@ -245,29 +275,32 @@ export default function Contact() {
               </p>
 
               {isSubmitted ? (
-                <div className="p-8 bg-emerald-50 rounded-card border border-emerald-200 text-center space-y-4">
-                  <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center mx-auto">
-                    <CheckCircle className="w-6 h-6" aria-hidden="true" />
-                  </div>
-                  <h3 className="font-serif font-bold text-xl text-emerald-950">
-                    Message Sent Successfully
-                  </h3>
-                  <p className="text-sm text-emerald-800 max-w-md mx-auto">
-                    Thank you for reaching out to Srimanasa Educational Academy. Our administrative officer will respond within one business day.
-                  </p>
-                  <Button
-                    variant="secondary"
-                    size="sm"
-                    onClick={() => setIsSubmitted(false)}
-                  >
-                    Send Another Message
-                  </Button>
-                </div>
+                <FormSuccessPanel
+                  title="Thank you!"
+                  message="We have received your details. Our team will call you shortly."
+                  onReset={handleResetForm}
+                  buttonText="Send another enquiry"
+                  additionalInfo={
+                    <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                      Our administrative officer will review your query and respond within one business day.
+                    </p>
+                  }
+                />
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-4" noValidate>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <FormField id="contact-name" label="Your Name" required>
-                      <Input
+                <>
+                  {errorMessage && (
+                    <div
+                      className="mb-4 p-3.5 bg-red-50 text-red-700 rounded-lg text-sm border border-red-200 dark:bg-red-950/40 dark:text-red-300 dark:border-red-900/60"
+                      role="alert"
+                    >
+                      {errorMessage}
+                    </div>
+                  )}
+
+                  <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <FormField id="contact-name" label="Your Name" required>
+                        <Input
                         name="name"
                         value={formData.name}
                         onChange={handleChange}
@@ -341,9 +374,10 @@ export default function Contact() {
                     </Button>
                   </div>
                 </form>
-              )}
-            </div>
+              </>
+            )}
           </div>
+        </div>
 
         </div>
       </Section>

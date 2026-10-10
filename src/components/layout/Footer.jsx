@@ -2,12 +2,20 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, Phone, Mail, Clock, ArrowUpRight, ShieldCheck, Heart } from 'lucide-react';
 import { Container } from '../ui/Container';
+import { useScrollReveal } from '../ui/Reveal';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const [revealRef, isRevealed] = useScrollReveal();
 
   return (
-    <footer className="bg-primary-950 text-neutral-300 pt-16 pb-12 border-t border-primary-900" aria-labelledby="footer-heading">
+    <footer
+      ref={revealRef}
+      className={`bg-primary-950 text-neutral-300 pt-16 pb-12 border-t border-primary-900 reveal-init ${
+        isRevealed ? 'reveal-visible' : ''
+      }`}
+      aria-labelledby="footer-heading"
+    >
       <h2 id="footer-heading" className="sr-only">Footer</h2>
       
       <Container>
