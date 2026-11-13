@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { Menu, X, Phone, ArrowRight, Lock } from 'lucide-react';
+import { Menu, X, Phone, ArrowRight, Lock, User as UserIcon, LogOut, LogIn } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { Container } from '../ui/Container';
 import { ThemeToggleSwitch } from '../ui/ThemeToggleSwitch';
+import { useAuth } from '../../context/AuthContext';
 
 const NAV_LINKS = [
   { name: 'Home', path: '/', isLocked: false },
@@ -16,6 +17,7 @@ const NAV_LINKS = [
 ];
 
 export function Navbar() {
+  const { user, logout, isAuthenticated } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
@@ -156,8 +158,43 @@ export function Navbar() {
           </nav>
 
           {/* Desktop Action Buttons & Pill Theme Switch */}
-          <div className="hidden lg:flex items-center gap-4">
+          <div className="hidden lg:flex items-center gap-3">
             <ThemeToggleSwitch />
+
+            {isAuthenticated ? (
+              <div className="flex items-center gap-2 pl-2 border-l border-neutral-200 dark:border-neutral-700">
+                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-xs">
+                  <UserIcon className="w-3.5 h-3.5 text-terracotta-600 dark:text-terracotta-400" />
+                  <span className="font-semibold text-neutral-800 dark:text-neutral-200 max-w-[120px] truncate">
+                    {user?.name}
+                  </span>
+                  {user?.role === 'admin' && (
+                    <span className="text-[10px] uppercase font-bold bg-accent-500 text-neutral-950 px-1 rounded">
+                      Admin
+                    </span>
+                  )}
+                </div>
+                <button
+                  type="button"
+                  onClick={logout}
+                  className="p-1.5 rounded-button text-neutral-500 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 transition-colors"
+                  title="Log out"
+                  aria-label="Log out"
+                >
+                  <LogOut className="w-4 h-4" />
+                </button>
+              </div>
+            ) : (
+              <Button
+                as={Link}
+                to="/login"
+                variant="secondary"
+                size="sm"
+                leftIcon={LogIn}
+              >
+                Sign In
+              </Button>
+            )}
 
             <Button
               as={Link}
@@ -240,7 +277,40 @@ export function Navbar() {
               })}
             </nav>
 
-            <div className="pt-4 border-t border-neutral-200 flex flex-col gap-3">
+            <div className="pt-4 border-t border-neutral-200 dark:border-neutral-700 flex flex-col gap-3">
+              {isAuthenticated ? (
+                <div className="flex items-center justify-between p-3 rounded-xl bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center text-primary-950 dark:text-primary-100 font-bold text-xs">
+                      {user?.name?.[0]?.toUpperCase()}
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold text-neutral-900 dark:text-neutral-100">{user?.name}</p>
+                      <p className="text-[10px] text-neutral-500 uppercase tracking-wider">{user?.role}</p>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={logout}
+                    className="flex items-center gap-1 text-xs text-red-600 dark:text-red-400 font-semibold px-2.5 py-1.5 rounded-button hover:bg-red-50 dark:hover:bg-red-950/40"
+                  >
+                    <LogOut className="w-3.5 h-3.5" />
+                    <span>Logout</span>
+                  </button>
+                </div>
+              ) : (
+                <Button
+                  as={Link}
+                  to="/login"
+                  variant="secondary"
+                  size="md"
+                  className="w-full justify-center"
+                  leftIcon={LogIn}
+                >
+                  Student Sign In
+                </Button>
+              )}
+
               <Button
                 as={Link}
                 to="/admission"
@@ -253,7 +323,7 @@ export function Navbar() {
               </Button>
               <a
                 href="tel:+917397689062"
-                className="flex items-center justify-center gap-2 py-3 text-xs text-neutral-600 font-medium min-h-[44px]"
+                className="flex items-center justify-center gap-2 py-3 text-xs text-neutral-600 dark:text-neutral-400 font-medium min-h-[44px]"
               >
                 <Phone className="w-4 h-4 text-terracotta-600" aria-hidden="true" />
                 Call Admissions: +91 73976 89062

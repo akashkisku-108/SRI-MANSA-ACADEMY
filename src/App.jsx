@@ -4,9 +4,9 @@ import { Loader2 } from 'lucide-react';
 import { ClickSoundProvider } from './components/ui/ClickSoundProvider';
 import { ScrollProgressBar } from './components/ui/ScrollProgressBar';
 import { ThemeProvider } from './context/ThemeContext';
+import { AuthProvider } from './context/AuthContext';
 
-// Lazy-loaded route pages for code-splitting and instant initial page load
-const Home = lazy(() => import('./pages/Home'));
+import Home from './pages/Home';
 const About = lazy(() => import('./pages/About'));
 const Courses = lazy(() => import('./pages/Courses')); // Preserved for future unlocking
 const Faculty = lazy(() => import('./pages/Faculty')); // Preserved for future unlocking
@@ -16,6 +16,9 @@ const Contact = lazy(() => import('./pages/Contact'));
 const Admission = lazy(() => import('./pages/Admission'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const ComingSoon = lazy(() => import('./pages/ComingSoon'));
+const Login = lazy(() => import('./pages/Login'));
+const Register = lazy(() => import('./pages/Register'));
+const AdminLogin = lazy(() => import('./pages/AdminLogin'));
 
 /**
  * Fallback loading spinner during route bundle chunk loading
@@ -46,28 +49,35 @@ function PageFallbackLoader() {
 export default function App() {
   return (
     <ThemeProvider>
-      <BrowserRouter>
-        {/* Scroll Progress Bar (3px fixed at top) */}
-        <ScrollProgressBar />
-        {/* Global click sound & haptic provider */}
-        <ClickSoundProvider />
-        <Suspense fallback={<PageFallbackLoader />}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            {/* Temporarily locked sections showing dedicated Coming Soon state */}
-            <Route path="/courses" element={<ComingSoon sectionKey="programs" />} />
-            <Route path="/programs" element={<ComingSoon sectionKey="programs" />} />
-            <Route path="/faculty" element={<Faculty />} />
-            <Route path="/results" element={<ComingSoon sectionKey="results" />} />
-            <Route path="/gallery" element={<ComingSoon sectionKey="gallery" />} />
-            
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/admission" element={<Admission />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Suspense>
-      </BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter>
+          {/* Scroll Progress Bar (3px fixed at top) */}
+          <ScrollProgressBar />
+          {/* Global click sound & haptic provider */}
+          <ClickSoundProvider />
+          <Suspense fallback={<PageFallbackLoader />}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              {/* Temporarily locked sections showing dedicated Coming Soon state */}
+              <Route path="/courses" element={<ComingSoon sectionKey="programs" />} />
+              <Route path="/programs" element={<ComingSoon sectionKey="programs" />} />
+              <Route path="/faculty" element={<Faculty />} />
+              <Route path="/results" element={<ComingSoon sectionKey="results" />} />
+              <Route path="/gallery" element={<ComingSoon sectionKey="gallery" />} />
+
+              {/* Authentication Routes */}
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/admin/login" element={<AdminLogin />} />
+
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/admission" element={<Admission />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
+        </BrowserRouter>
+      </AuthProvider>
     </ThemeProvider>
   );
 }

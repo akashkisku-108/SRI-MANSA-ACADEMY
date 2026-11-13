@@ -4,12 +4,13 @@ import { ArrowRight, BookOpen, Compass, Award, CheckCircle } from 'lucide-react'
 import { Button } from '../ui/Button';
 import { Container } from '../ui/Container';
 import { Badge } from '../ui/Badge';
+import { HeroBackground } from './HeroBackground';
 
 export function Hero() {
   return (
-    <section className="relative bg-surface-warm text-neutral-900 pt-10 pb-16 md:pt-16 md:pb-24 border-b border-neutral-200/90 overflow-hidden">
-      {/* Subtle architectural background texture */}
-      <div className="absolute inset-0 bg-kolam-subtle opacity-40 pointer-events-none" aria-hidden="true" />
+    <section className="relative text-neutral-900 pt-10 pb-16 md:pt-16 md:pb-24 border-b border-neutral-200/90 dark:border-white/10 overflow-hidden">
+      {/* Dynamic Animated Educational Hero Background */}
+      <HeroBackground />
 
       <Container className="relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
