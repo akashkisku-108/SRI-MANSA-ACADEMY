@@ -26,6 +26,11 @@ function isAllowedDevOrigin(origin) {
       /^10\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(hostname) ||
       /^172\.(1[6-9]|2\d|3[01])\.\d{1,3}\.\d{1,3}$/.test(hostname);
 
+    // Tunnel domains for live sharing
+    if (hostname.endsWith('.loca.lt') || hostname.endsWith('.trycloudflare.com')) {
+      return true;
+    }
+
     if (isLocalNetworkIP && isDevPort) {
       return true;
     }
