@@ -35,9 +35,9 @@ export function Hero() {
                 <span className="hero-word-reveal" style={{ animationDelay: '160ms' }}>Foundations.</span>
               </span>
               <span className="text-terracotta-700 italic font-serif block" aria-hidden="true">
-                <span className="hero-word-reveal" style={{ animationDelay: '240ms' }}>Creating</span>{' '}
-                <span className="hero-word-reveal" style={{ animationDelay: '320ms' }}>Confident</span>{' '}
-                <span className="hero-word-reveal" style={{ animationDelay: '400ms' }}>Achievers.</span>
+                <span className="hero-word-reveal hero-flowing-gradient" style={{ animationDelay: '240ms' }}>Creating</span>{' '}
+                <span className="hero-word-reveal hero-flowing-gradient" style={{ animationDelay: '320ms' }}>Confident</span>{' '}
+                <span className="hero-word-reveal hero-flowing-gradient" style={{ animationDelay: '400ms' }}>Achievers.</span>
               </span>
             </h1>
 

@@ -5,12 +5,14 @@ import { Card } from '../ui/Card';
 import { Badge } from '../ui/Badge';
 import { Button } from '../ui/Button';
 import { useScrollReveal } from '../ui/Reveal';
+import { useInteractiveCard } from '../../hooks/useInteractiveCard';
 
 /**
  * CourseCard component showcasing course details and direct enrolment action.
  */
 export function CourseCard({ course, index = 0 }) {
-  const [cardRef, isRevealed] = useScrollReveal();
+  const [revealRef, isRevealed] = useScrollReveal();
+  const tiltRef = useInteractiveCard();
   const cappedIndex = Math.min(6, Math.max(0, index));
   const staggerDelay = cappedIndex * 80;
   const enquiryUrl = `/admission?course=${course.id}&standard=${encodeURIComponent(course.classCategory)}`;
@@ -28,15 +30,19 @@ export function CourseCard({ course, index = 0 }) {
 
   return (
     <div
-      ref={cardRef}
-      className={`flex flex-col justify-between h-full bg-white rounded-card border border-neutral-200/90 hover:border-neutral-400 transition-all duration-200 shadow-sm overflow-hidden group reveal-init ${
-        isRevealed ? 'reveal-visible' : ''
-      }`}
+      ref={revealRef}
+      className={`h-full reveal-init ${isRevealed ? 'reveal-visible' : ''}`}
       style={{
         transitionDelay: `${staggerDelay}ms`,
       }}
     >
-      <div>
+      <div
+        ref={tiltRef}
+        className="interactive-card-wrapper h-full"
+      >
+        <div className="interactive-card-surface flex flex-col justify-between h-full bg-white rounded-card border border-neutral-200/90 hover:border-neutral-400 transition-colors duration-200 shadow-sm overflow-hidden group">
+          <div className="interactive-card-spotlight pointer-events-none" aria-hidden="true" />
+          <div>
         {/* Course Image Header with Institutional Category Strip */}
         <div className="relative aspect-[16/9] w-full overflow-hidden bg-neutral-100">
           <img
@@ -115,6 +121,8 @@ export function CourseCard({ course, index = 0 }) {
         >
           Curriculum & Admission Details
         </Button>
+      </div>
+        </div>
       </div>
     </div>
   );

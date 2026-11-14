@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
 import { ClickSoundProvider } from './components/ui/ClickSoundProvider';
 import { ScrollProgressBar } from './components/ui/ScrollProgressBar';
+import { CustomCursor } from './components/ui/CustomCursor';
 import { ThemeProvider } from './context/ThemeContext';
 import { AuthProvider } from './context/AuthContext';
 
@@ -55,6 +56,8 @@ export default function App() {
           <ScrollProgressBar />
           {/* Global click sound & haptic provider */}
           <ClickSoundProvider />
+          {/* Custom Desktop Smooth Cursor */}
+          <CustomCursor />
           <Suspense fallback={<PageFallbackLoader />}>
             <Routes>
               <Route path="/" element={<Home />} />

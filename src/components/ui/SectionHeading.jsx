@@ -42,6 +42,10 @@ export function SectionHeading({
       >
         {title}
       </h2>
+      <div
+        className={`heading-animated-underline mt-3 ${isCentered ? 'mx-auto' : ''}`}
+        aria-hidden="true"
+      />
       {description && (
         <p
           className={`mt-3.5 text-base sm:text-lg leading-relaxed ${

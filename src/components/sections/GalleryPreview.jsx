@@ -6,6 +6,7 @@ import { SectionHeading } from '../ui/SectionHeading';
 import { Button } from '../ui/Button';
 import { Badge } from '../ui/Badge';
 import { Skeleton } from '../ui/Skeleton';
+import { InteractiveCard } from '../ui/InteractiveCard';
 import { useGallery } from '../../hooks/useGallery';
 
 const ICON_MAP = {
@@ -37,7 +38,10 @@ export function GalleryPreview() {
       {/* Asymmetric Photo Journal Grid */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
         {/* Large Main Feature: Seminar Hall (7 cols) */}
-        <div className="md:col-span-7 rounded-card overflow-hidden border border-neutral-300 shadow-card bg-neutral-100 flex flex-col justify-between">
+        <InteractiveCard
+          className="md:col-span-7 h-full"
+          innerClassName="rounded-card overflow-hidden border border-neutral-300 shadow-card bg-neutral-100 flex flex-col justify-between h-full"
+        >
           <div className="relative aspect-[16/10] overflow-hidden">
             <img
               src="/campus-lecture.jpg"
@@ -54,12 +58,15 @@ export function GalleryPreview() {
               Senior guest lectures and concept derivations where students actively dissect challenging entrance problems together.
             </p>
           </div>
-        </div>
+        </InteractiveCard>
 
         {/* Right Stack: Mentoring & Reading Hall (5 cols) */}
         <div className="md:col-span-5 flex flex-col gap-6">
           {/* Card 1: Mentoring */}
-          <div className="rounded-card overflow-hidden border border-neutral-200 shadow-card bg-neutral-100 flex-1 flex flex-col justify-between">
+          <InteractiveCard
+            className="flex-1"
+            innerClassName="rounded-card overflow-hidden border border-neutral-200 shadow-card bg-neutral-100 flex-1 flex flex-col justify-between h-full"
+          >
             <div className="relative aspect-[16/9] overflow-hidden">
               <img
                 src="/campus-mentoring.jpg"
@@ -76,10 +83,13 @@ export function GalleryPreview() {
                 Post-lecture desk-side tutoring ensures no conceptual doubt carries over into the next day.
               </p>
             </div>
-          </div>
+          </InteractiveCard>
 
           {/* Card 2: Subject Lab Work */}
-          <div className="rounded-card overflow-hidden border border-neutral-200 shadow-card bg-neutral-100 flex-1 flex flex-col justify-between">
+          <InteractiveCard
+            className="flex-1"
+            innerClassName="rounded-card overflow-hidden border border-neutral-200 shadow-card bg-neutral-100 flex-1 flex flex-col justify-between h-full"
+          >
             <div className="relative aspect-[16/9] overflow-hidden">
               <img
                 src="/course-physics.jpg"
@@ -96,7 +106,7 @@ export function GalleryPreview() {
                 Observing theoretical laws in physical practice to foster lasting intuition.
               </p>
             </div>
-          </div>
+          </InteractiveCard>
         </div>
       </div>
 

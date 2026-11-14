@@ -4,6 +4,7 @@ import { ArrowRight, Target, Sparkles, BookMarked, Shield } from 'lucide-react';
 import { Section } from '../ui/Section';
 import { SectionHeading } from '../ui/SectionHeading';
 import { Button } from '../ui/Button';
+import { Reveal } from '../ui/Reveal';
 
 export function AboutPreview() {
   return (
@@ -65,7 +66,7 @@ export function AboutPreview() {
 
         {/* Bottom 3 Typography-Driven Pillars */}
         <div className="pt-10 border-t border-neutral-200/90 grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
-          <div className="space-y-1">
+          <Reveal staggerIndex={0} className="space-y-1">
             <div className="font-serif text-3xl sm:text-4xl text-primary-950 font-normal">
               Holistic
             </div>
@@ -75,9 +76,9 @@ export function AboutPreview() {
             <p className="text-xs text-neutral-600 leading-relaxed">
               Curriculum structured to master core concepts thoroughly before advancing to rigorous examination problem sets.
             </p>
-          </div>
+          </Reveal>
 
-          <div className="space-y-1">
+          <Reveal staggerIndex={1} className="space-y-1">
             <div className="font-serif text-3xl sm:text-4xl text-primary-950 font-normal">
               Daily
             </div>
@@ -87,9 +88,9 @@ export function AboutPreview() {
             <p className="text-xs text-neutral-600 leading-relaxed">
               Dedicated daily post-lecture sessions ensuring every student's queries are addressed promptly by faculties.
             </p>
-          </div>
+          </Reveal>
 
-          <div className="space-y-1">
+          <Reveal staggerIndex={2} className="space-y-1">
             <div className="font-serif text-3xl sm:text-4xl text-primary-950 font-normal">
               Personal
             </div>
@@ -99,7 +100,7 @@ export function AboutPreview() {
             <p className="text-xs text-neutral-600 leading-relaxed">
               Periodical performance reviews and individualized attention tailored to each student for optimum results.
             </p>
-          </div>
+          </Reveal>
         </div>
 
       </div>

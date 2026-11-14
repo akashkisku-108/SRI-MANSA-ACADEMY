@@ -1,13 +1,14 @@
 import React from 'react';
 import { Section } from '../ui/Section';
 import { SectionHeading } from '../ui/SectionHeading';
+import { InteractiveCard } from '../ui/InteractiveCard';
 import { 
   GraduationCap, 
   Users2, 
   HelpCircle, 
   BookOpen, 
   BadgePercent, 
-  Target,
+  Target, 
   Award
 } from 'lucide-react';
 
@@ -64,9 +65,12 @@ export function WhyChooseUs() {
         {PILLARS.map((pillar, idx) => {
           const Icon = pillar.icon;
           return (
-            <div
+            <InteractiveCard
               key={idx}
-              className="bg-white p-6 rounded-card border border-neutral-200/90 hover:border-neutral-400 transition-all duration-200 flex flex-col justify-between"
+              reveal={true}
+              staggerIndex={idx}
+              className="h-full"
+              innerClassName="bg-white p-6 rounded-card border border-neutral-200/90 hover:border-neutral-400 transition-colors duration-200 flex flex-col justify-between overflow-hidden shadow-sm"
             >
               <div>
                 <div className="flex items-center justify-between mb-4">
@@ -90,7 +94,7 @@ export function WhyChooseUs() {
               <div className="mt-5 pt-3 border-t border-neutral-100 flex items-center text-xs font-medium text-terracotta-700">
                 <span>{pillar.tag}</span>
               </div>
-            </div>
+            </InteractiveCard>
           );
         })}
       </div>

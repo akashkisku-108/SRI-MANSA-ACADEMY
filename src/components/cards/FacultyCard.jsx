@@ -3,12 +3,14 @@ import { Award, GraduationCap, Briefcase } from 'lucide-react';
 import { Card } from '../ui/Card';
 import { Badge } from '../ui/Badge';
 import { useScrollReveal } from '../ui/Reveal';
+import { useInteractiveCard } from '../../hooks/useInteractiveCard';
 
 /**
  * FacultyCard component displaying academic credentials, experience, and bio.
  */
 export function FacultyCard({ faculty, index = 0 }) {
-  const [cardRef, isRevealed] = useScrollReveal();
+  const [revealRef, isRevealed] = useScrollReveal();
+  const tiltRef = useInteractiveCard();
   const [imageError, setImageError] = useState(false);
   const cappedIndex = Math.min(6, Math.max(0, index));
   const staggerDelay = cappedIndex * 80;
@@ -37,15 +39,19 @@ export function FacultyCard({ faculty, index = 0 }) {
 
   return (
     <div
-      ref={cardRef}
-      className={`flex flex-col h-full bg-white rounded-card border border-neutral-200/90 hover:border-neutral-400 transition-all duration-200 shadow-sm overflow-hidden reveal-init ${
-        isRevealed ? 'reveal-visible' : ''
-      }`}
+      ref={revealRef}
+      className={`h-full reveal-init ${isRevealed ? 'reveal-visible' : ''}`}
       style={{
         transitionDelay: `${staggerDelay}ms`,
       }}
     >
-      {/* Portrait Header */}
+      <div
+        ref={tiltRef}
+        className="interactive-card-wrapper h-full"
+      >
+        <div className="interactive-card-surface flex flex-col h-full bg-white rounded-card border border-neutral-200/90 hover:border-neutral-400 transition-colors duration-200 shadow-sm overflow-hidden">
+          <div className="interactive-card-spotlight pointer-events-none" aria-hidden="true" />
+          {/* Portrait Header */}
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-neutral-100">
         {photo && !imageError ? (
           <img
@@ -127,7 +133,9 @@ export function FacultyCard({ faculty, index = 0 }) {
             ))}
           </div>
         )}
+        </div>
       </div>
     </div>
-  );
+  </div>
+);
 }

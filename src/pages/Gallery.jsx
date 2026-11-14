@@ -18,6 +18,7 @@ import { Badge } from '../components/ui/Badge';
 import { Container } from '../components/ui/Container';
 import { EmptyState } from '../components/ui/EmptyState';
 import { Skeleton } from '../components/ui/Skeleton';
+import { InteractiveCard } from '../components/ui/InteractiveCard';
 import { useGallery } from '../hooks/useGallery';
 
 const CATEGORIES = [
@@ -167,10 +168,11 @@ export default function Gallery() {
               const IconComponent = ICON_MAP[item.theme?.iconType] || BookOpen;
 
               return (
-                <div
+                <InteractiveCard
                   key={item.id}
                   onClick={() => openLightbox(idx)}
-                  className="group relative bg-white rounded-card overflow-hidden border border-neutral-200/90 shadow-card hover:shadow-card-hover cursor-pointer transition-all duration-300 flex flex-col justify-between"
+                  className="h-full"
+                  innerClassName="group relative bg-white rounded-card overflow-hidden border border-neutral-200/90 shadow-card hover:shadow-card-hover cursor-pointer transition-colors duration-300 flex flex-col justify-between h-full"
                   tabIndex={0}
                   role="button"
                   aria-haspopup="dialog"
@@ -229,7 +231,7 @@ export default function Gallery() {
                       </p>
                     </div>
                   </div>
-                </div>
+                </InteractiveCard>
               );
             })}
           </div>

@@ -81,10 +81,10 @@ export function Navbar() {
 
       {/* Main Sticky Navbar */}
       <header
-        className={`sticky top-0 z-40 w-full transition-all duration-200 ${
+        className={`sticky top-0 z-40 w-full transition-all duration-300 ${
           isScrolled
-            ? 'bg-white/98 backdrop-blur-xs border-b border-neutral-300 shadow-sm py-2.5'
-            : 'bg-white border-b border-neutral-200/90 py-3.5'
+            ? 'bg-white/85 dark:bg-[#0E1724]/85 backdrop-blur-md border-b border-neutral-200/80 dark:border-white/10 shadow-sm py-2'
+            : 'bg-white/95 dark:bg-[#0E1724]/95 backdrop-blur-xs border-b border-neutral-200/90 dark:border-white/10 py-3.5'
         }`}
       >
         <Container className="flex items-center justify-between">
@@ -94,11 +94,11 @@ export function Navbar() {
             className="flex items-center gap-3 group focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary-900 rounded p-1"
             aria-label="Srimanasa Educational Academy Home"
           >
-            <div className="h-9 sm:h-11 flex items-center">
+            <div className={`flex items-center transition-all duration-300 ${isScrolled ? 'h-8 sm:h-9' : 'h-9 sm:h-11'}`}>
               <img
                 src="/srimanasa-logo.png"
                 alt="Srimanasa Educational Academy - Bridge to Lead"
-                className="h-9 sm:h-11 w-auto object-contain"
+                className={`w-auto object-contain transition-all duration-300 ${isScrolled ? 'h-8 sm:h-9' : 'h-9 sm:h-11'}`}
               />
             </div>
           </Link>
@@ -117,11 +117,11 @@ export function Navbar() {
                       disabled
                       aria-disabled="true"
                       aria-label={`${link.name} — Coming Soon`}
-                      className="cursor-not-allowed text-xs uppercase tracking-wider text-neutral-600 hover:text-terracotta-700 py-1 inline-flex items-center gap-1.5 border-b-2 border-transparent transition-colors duration-150 focus-visible:outline-none"
+                      className="cursor-not-allowed text-xs uppercase tracking-wider text-neutral-600 dark:text-neutral-400 py-1.5 inline-flex items-center gap-1.5 border-b-2 border-transparent transition-colors duration-150 focus-visible:outline-none"
                     >
                       <span className="font-medium">{link.name}</span>
-                      <span className="inline-flex items-center gap-1 text-[10px] text-terracotta-700 font-semibold lowercase tracking-normal bg-terracotta-50/90 border border-terracotta-200/70 px-1.5 py-0.5 rounded shadow-2xs">
-                        <Lock className="w-2.5 h-2.5 text-terracotta-600" aria-hidden="true" />
+                      <span className="inline-flex items-center gap-1 text-[10px] text-terracotta-700 dark:text-terracotta-400 font-semibold lowercase tracking-normal bg-terracotta-50/90 dark:bg-terracotta-950/60 border border-terracotta-200/70 dark:border-terracotta-700/60 px-1.5 py-0.5 rounded shadow-2xs">
+                        <Lock className="w-2.5 h-2.5 text-terracotta-600 dark:text-terracotta-400" aria-hidden="true" />
                         <span>soon</span>
                       </span>
                     </button>
@@ -144,14 +144,15 @@ export function Navbar() {
                   key={link.path}
                   to={link.path}
                   className={({ isActive }) =>
-                    `text-xs uppercase tracking-wider transition-colors duration-150 py-1 inline-flex items-center border-b-2 ${
+                    `nav-link-item relative text-xs uppercase tracking-wider transition-colors duration-150 py-1.5 inline-flex items-center font-medium ${
                       isActive
-                        ? 'text-primary-950 font-bold border-terracotta-600'
-                        : 'text-neutral-700 hover:text-primary-950 border-transparent hover:border-neutral-300'
+                        ? 'active text-primary-950 dark:text-white font-bold'
+                        : 'text-neutral-700 dark:text-neutral-300 hover:text-primary-950 dark:hover:text-white'
                     }`
                   }
                 >
-                  {link.name}
+                  <span>{link.name}</span>
+                  <span className="nav-link-underline" aria-hidden="true" />
                 </NavLink>
               );
             })}

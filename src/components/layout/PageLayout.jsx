@@ -1,12 +1,16 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { ScrollToTop } from './ScrollToTop';
+import { BackToTopButton } from '../ui/BackToTopButton';
 
 /**
  * Standard page layout with accessible skip link, sticky navbar, and footer.
  */
 export function PageLayout({ children }) {
+  const location = useLocation();
+
   return (
     <div className="flex flex-col min-h-screen bg-surface-warm text-neutral-800">
       <ScrollToTop />
@@ -22,10 +26,13 @@ export function PageLayout({ children }) {
       <Navbar />
 
       <main id="main-content" className="flex-1 focus:outline-none">
-        {children}
+        <div key={location.pathname} className="page-transition-container">
+          {children}
+        </div>
       </main>
 
       <Footer />
+      <BackToTopButton />
     </div>
   );
 }

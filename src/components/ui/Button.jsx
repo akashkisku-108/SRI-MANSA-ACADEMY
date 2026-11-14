@@ -20,7 +20,7 @@ export function Button({
 
   const variantStyles = {
     // Deep Indigo Academic Primary
-    primary: "bg-primary-900 text-white hover:bg-primary-800 shadow-sm focus-visible:ring-primary-700 active:bg-primary-950",
+    primary: "bg-primary-900 text-white hover:bg-primary-800 shadow-sm focus-visible:ring-primary-700 active:bg-primary-950 btn-shimmer-glow",
     // Terracotta Academic Callout
     terracotta: "bg-terracotta-600 text-white hover:bg-terracotta-700 font-semibold shadow-sm focus-visible:ring-terracotta-500",
     // Muted Turmeric Gold Accent

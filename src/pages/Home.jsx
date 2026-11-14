@@ -2,6 +2,7 @@ import React from 'react';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { PageLayout } from '../components/layout/PageLayout';
 import { Hero } from '../components/sections/Hero';
+import { HeroMarquee } from '../components/sections/HeroMarquee';
 import { StatsStrip } from '../components/sections/StatsStrip';
 import { AboutPreview } from '../components/sections/AboutPreview';
 import { CoursesPreview } from '../components/sections/CoursesPreview';
@@ -23,6 +24,9 @@ export default function Home() {
     <PageLayout>
       {/* 1. Hero */}
       <Hero />
+
+      {/* 1b. Infinite slow marquee strip */}
+      <HeroMarquee />
 
       {/* 2. Key stats strip */}
       <StatsStrip />
