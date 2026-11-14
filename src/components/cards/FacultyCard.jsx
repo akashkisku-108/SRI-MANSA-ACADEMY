@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Award, GraduationCap, Briefcase } from 'lucide-react';
 import { Card } from '../ui/Card';
 import { Badge } from '../ui/Badge';
@@ -9,6 +9,7 @@ import { useScrollReveal } from '../ui/Reveal';
  */
 export function FacultyCard({ faculty, index = 0 }) {
   const [cardRef, isRevealed] = useScrollReveal();
+  const [imageError, setImageError] = useState(false);
   const cappedIndex = Math.min(6, Math.max(0, index));
   const staggerDelay = cappedIndex * 80;
 
@@ -46,56 +47,72 @@ export function FacultyCard({ faculty, index = 0 }) {
     >
       {/* Portrait Header */}
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-neutral-100">
-        {photo ? (
+        {photo && !imageError ? (
           <img
             src={photo}
-            alt={`${faculty.name} - ${faculty.role}`}
+            alt={`${faculty.name} - ${faculty.role || faculty.subject || 'Faculty'}`}
             className="w-full h-full object-cover object-top"
             loading="lazy"
+            onError={() => setImageError(true)}
           />
         ) : (
           <div
             className="w-full h-full flex items-center justify-center text-white font-serif text-3xl font-normal"
             style={{ backgroundColor: faculty.avatarAccent || '#122033' }}
+            aria-label={faculty.name}
           >
-            {faculty.initials}
+            {faculty.initials || faculty.name.split(' ').map((n) => n[0]).join('').slice(0, 2).toUpperCase()}
           </div>
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-primary-950/85 via-transparent to-transparent" />
         <div className="absolute bottom-3 left-3 right-3 text-white">
-          <span className="inline-block text-[11px] font-semibold uppercase tracking-wider text-accent-300 bg-primary-950/60 px-2 py-0.5 rounded-button backdrop-blur-xs mb-1">
-            {faculty.subject}
-          </span>
+          {faculty.subject && (
+            <span className="inline-block text-[11px] font-semibold uppercase tracking-wider text-accent-300 bg-primary-950/60 px-2 py-0.5 rounded-button backdrop-blur-xs mb-1">
+              {faculty.subject}
+            </span>
+          )}
           <h3 className="text-base font-serif text-white leading-snug">
             {faculty.name}
           </h3>
-          <p className="text-[11px] text-neutral-300 truncate">
-            {faculty.role}
-          </p>
+          {faculty.role && (
+            <p className="text-[11px] text-neutral-300 truncate">
+              {faculty.role}
+            </p>
+          )}
         </div>
       </div>
 
       <div className="p-4 sm:p-5 flex flex-col flex-1 justify-between">
-        {/* Credentials */}
-        <div className="space-y-2 text-xs text-neutral-600 mb-3 bg-surface-warm p-3 rounded-card border border-neutral-200/70">
-          <div className="flex items-start gap-1.5">
-            <GraduationCap className="w-3.5 h-3.5 text-terracotta-700 shrink-0 mt-0.5" aria-hidden="true" />
-            <span className="font-medium text-neutral-800">{faculty.qualification}</span>
+        {/* Credentials (only display if at least one credential exists) */}
+        {(faculty.qualification || faculty.experience || faculty.almaMater) && (
+          <div className="space-y-2 text-xs text-neutral-600 mb-3 bg-surface-warm p-3 rounded-card border border-neutral-200/70">
+            {faculty.qualification && (
+              <div className="flex items-start gap-1.5">
+                <GraduationCap className="w-3.5 h-3.5 text-terracotta-700 shrink-0 mt-0.5" aria-hidden="true" />
+                <span className="font-medium text-neutral-800">{faculty.qualification}</span>
+              </div>
+            )}
+            {faculty.experience && (
+              <div className="flex items-center gap-1.5">
+                <Briefcase className="w-3.5 h-3.5 text-terracotta-700 shrink-0" aria-hidden="true" />
+                <span>{faculty.experience}</span>
+              </div>
+            )}
+            {faculty.almaMater && (
+              <div className="flex items-center gap-1.5">
+                <Award className="w-3.5 h-3.5 text-accent-600 shrink-0" aria-hidden="true" />
+                <span className="text-neutral-600 truncate">{faculty.almaMater}</span>
+              </div>
+            )}
           </div>
-          <div className="flex items-center gap-1.5">
-            <Briefcase className="w-3.5 h-3.5 text-terracotta-700 shrink-0" aria-hidden="true" />
-            <span>{faculty.experience}</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <Award className="w-3.5 h-3.5 text-accent-600 shrink-0" aria-hidden="true" />
-            <span className="text-neutral-600 truncate">{faculty.almaMater}</span>
-          </div>
-        </div>
+        )}
 
         {/* Bio */}
-        <p className="text-xs text-neutral-600 leading-relaxed mb-4 flex-1">
-          {faculty.bio}
-        </p>
+        {faculty.bio && (
+          <p className="text-xs text-neutral-600 leading-relaxed mb-4 flex-1">
+            {faculty.bio}
+          </p>
+        )}
 
         {/* Specialization Tags */}
         {faculty.specializations && faculty.specializations.length > 0 && (
