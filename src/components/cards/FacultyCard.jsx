@@ -32,6 +32,12 @@ export function FacultyCard({ faculty, index = 0 }) {
     if (faculty.name.includes('Murali')) {
       return '/faculty-murali.jpg';
     }
+    if (faculty.name.includes('Rohit')) {
+      return '/faculty-rohit.jpg';
+    }
+    if (faculty.name.toLowerCase().includes('sujatha')) {
+      return '/faculty-sujatha.jpg';
+    }
     return null;
   };
 
@@ -49,10 +55,10 @@ export function FacultyCard({ faculty, index = 0 }) {
         ref={tiltRef}
         className="interactive-card-wrapper h-full"
       >
-        <div className="interactive-card-surface flex flex-col h-full bg-white rounded-card border border-neutral-200/90 hover:border-neutral-400 transition-colors duration-200 shadow-sm overflow-hidden">
+        <div className="interactive-card-surface flex flex-col h-full bg-white dark:bg-[#132236] rounded-card border border-neutral-200/90 dark:border-white/10 hover:border-neutral-400 dark:hover:border-accent-500/50 transition-colors duration-200 shadow-sm overflow-hidden">
           <div className="interactive-card-spotlight pointer-events-none" aria-hidden="true" />
           {/* Portrait Header */}
-      <div className="relative aspect-[4/3] w-full overflow-hidden bg-neutral-100">
+      <div className="relative aspect-[4/3] w-full overflow-hidden bg-neutral-100 dark:bg-primary-950">
         {photo && !imageError ? (
           <img
             src={photo}
@@ -91,23 +97,23 @@ export function FacultyCard({ faculty, index = 0 }) {
       <div className="p-4 sm:p-5 flex flex-col flex-1 justify-between">
         {/* Credentials (only display if at least one credential exists) */}
         {(faculty.qualification || faculty.experience || faculty.almaMater) && (
-          <div className="space-y-2 text-xs text-neutral-600 mb-3 bg-surface-warm p-3 rounded-card border border-neutral-200/70">
+          <div className="space-y-2 text-xs text-neutral-600 dark:text-neutral-300 mb-3 bg-surface-warm dark:bg-primary-950/40 p-3 rounded-card border border-neutral-200/70 dark:border-white/10">
             {faculty.qualification && (
               <div className="flex items-start gap-1.5">
-                <GraduationCap className="w-3.5 h-3.5 text-terracotta-700 shrink-0 mt-0.5" aria-hidden="true" />
-                <span className="font-medium text-neutral-800">{faculty.qualification}</span>
+                <GraduationCap className="w-3.5 h-3.5 text-terracotta-700 dark:text-terracotta-400 shrink-0 mt-0.5" aria-hidden="true" />
+                <span className="font-medium text-neutral-800 dark:text-neutral-200">{faculty.qualification}</span>
               </div>
             )}
             {faculty.experience && (
               <div className="flex items-center gap-1.5">
-                <Briefcase className="w-3.5 h-3.5 text-terracotta-700 shrink-0" aria-hidden="true" />
+                <Briefcase className="w-3.5 h-3.5 text-terracotta-700 dark:text-terracotta-400 shrink-0" aria-hidden="true" />
                 <span>{faculty.experience}</span>
               </div>
             )}
             {faculty.almaMater && (
               <div className="flex items-center gap-1.5">
-                <Award className="w-3.5 h-3.5 text-accent-600 shrink-0" aria-hidden="true" />
-                <span className="text-neutral-600 truncate">{faculty.almaMater}</span>
+                <Award className="w-3.5 h-3.5 text-accent-600 dark:text-accent-400 shrink-0" aria-hidden="true" />
+                <span className="text-neutral-600 dark:text-neutral-400 truncate">{faculty.almaMater}</span>
               </div>
             )}
           </div>
@@ -115,18 +121,18 @@ export function FacultyCard({ faculty, index = 0 }) {
 
         {/* Bio */}
         {faculty.bio && (
-          <p className="text-xs text-neutral-600 leading-relaxed mb-4 flex-1">
+          <p className="text-xs text-neutral-600 dark:text-neutral-300 leading-relaxed mb-4 flex-1">
             {faculty.bio}
           </p>
         )}
 
         {/* Specialization Tags */}
         {faculty.specializations && faculty.specializations.length > 0 && (
-          <div className="pt-3 border-t border-neutral-100 flex flex-wrap gap-1">
+          <div className="pt-3 border-t border-neutral-100 dark:border-white/10 flex flex-wrap gap-1">
             {faculty.specializations.map((spec) => (
               <span
                 key={spec}
-                className="text-[11px] bg-neutral-100 text-neutral-700 px-2 py-0.5 rounded-button font-normal border border-neutral-200/60"
+                className="text-[11px] bg-neutral-100 dark:bg-primary-900/60 text-neutral-700 dark:text-neutral-300 px-2 py-0.5 rounded-button font-normal border border-neutral-200/60 dark:border-white/10"
               >
                 {spec}
               </span>

@@ -57,7 +57,7 @@ export function Footer() {
                 { name: 'Programs & Syllabus', path: '/courses', isLocked: true },
                 { name: 'Teaching Faculty', path: '/faculty', isLocked: false },
                 { name: 'Examination Results', path: '/results', isLocked: true },
-                { name: 'Campus Life & Gallery', path: '/gallery', isLocked: true },
+                { name: 'Campus Life & Gallery', path: '/gallery', isLocked: false },
                 { name: 'Campus Contact', path: '/contact', isLocked: false },
                 { name: 'Admissions Enquiry', path: '/admission', isLocked: false },
               ].map((link) => (

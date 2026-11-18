@@ -3,10 +3,13 @@ import { facultyService } from '../services/facultyService';
 
 /**
  * Custom hook to consume faculty members through the service layer.
+ * Returns the full roster as well as separated leadership and teaching cohorts.
  * @param {boolean} [featuredOnly=false]
  */
 export function useFaculty(featuredOnly = false) {
   const [faculty, setFaculty] = useState([]);
+  const [leadershipFaculty, setLeadershipFaculty] = useState([]);
+  const [teachingFaculty, setTeachingFaculty] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -14,12 +17,16 @@ export function useFaculty(featuredOnly = false) {
     let isMounted = true;
     setLoading(true);
 
-    const fetcher = featuredOnly ? facultyService.getFeatured(4) : facultyService.getAll();
+    const fetcher = featuredOnly
+      ? facultyService.getFeatured(4)
+      : facultyService.getAll();
 
     fetcher
       .then((data) => {
         if (isMounted) {
           setFaculty(data);
+          setLeadershipFaculty(data.filter((m) => m.isLeadership));
+          setTeachingFaculty(data.filter((m) => !m.isLeadership));
           setLoading(false);
         }
       })
@@ -35,5 +42,5 @@ export function useFaculty(featuredOnly = false) {
     };
   }, [featuredOnly]);
 
-  return { faculty, loading, error };
+  return { faculty, leadershipFaculty, teachingFaculty, loading, error };
 }

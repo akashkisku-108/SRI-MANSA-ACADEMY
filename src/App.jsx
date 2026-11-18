@@ -67,7 +67,7 @@ export default function App() {
               <Route path="/programs" element={<ComingSoon sectionKey="programs" />} />
               <Route path="/faculty" element={<Faculty />} />
               <Route path="/results" element={<ComingSoon sectionKey="results" />} />
-              <Route path="/gallery" element={<ComingSoon sectionKey="gallery" />} />
+              <Route path="/gallery" element={<Gallery />} />
 
               {/* Authentication Routes */}
               <Route path="/login" element={<Login />} />

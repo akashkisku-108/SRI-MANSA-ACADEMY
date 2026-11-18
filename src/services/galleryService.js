@@ -1,4 +1,4 @@
-import { galleryItems } from '../data/gallery';
+import { galleryItems, previewGalleryIds } from '../data/gallery';
 
 /**
  * Gallery Service Layer
@@ -28,12 +28,20 @@ export const galleryService = {
   },
 
   /**
-   * Fetch preview gallery items for the homepage.
+   * Fetch curated preview gallery items for the homepage.
    * @param {number} [limit=6]
    * @returns {Promise<typeof galleryItems>}
    */
   async getPreview(limit = 6) {
     await new Promise((resolve) => setTimeout(resolve, 200));
+    if (previewGalleryIds && previewGalleryIds.length > 0) {
+      const itemsMap = new Map(galleryItems.map((item) => [item.id, item]));
+      const curated = previewGalleryIds
+        .map((id) => itemsMap.get(id))
+        .filter(Boolean)
+        .slice(0, limit);
+      if (curated.length > 0) return curated;
+    }
     return galleryItems.slice(0, limit);
   }
 };

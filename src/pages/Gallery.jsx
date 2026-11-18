@@ -9,7 +9,9 @@ import {
   Users,
   GraduationCap,
   BarChart3,
-  Maximize2
+  Maximize2,
+  Laptop,
+  Play
 } from 'lucide-react';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { PageLayout } from '../components/layout/PageLayout';
@@ -20,13 +22,13 @@ import { EmptyState } from '../components/ui/EmptyState';
 import { Skeleton } from '../components/ui/Skeleton';
 import { InteractiveCard } from '../components/ui/InteractiveCard';
 import { useGallery } from '../hooks/useGallery';
+import { gallerySectionsContent } from '../data/gallery';
 
 const CATEGORIES = [
   'All',
-  'Classrooms & Library',
-  'Felicitations & Awards',
-  'Workshops & Labs',
-  'Campus Life'
+  'Digital Learning & Labs',
+  'Classrooms & Lecture Halls',
+  'Seminars & Institutional Visits'
 ];
 
 const ICON_MAP = {
@@ -36,12 +38,13 @@ const ICON_MAP = {
   users: Users,
   graduation: GraduationCap,
   chart: BarChart3,
+  laptop: Laptop,
 };
 
 export default function Gallery() {
   useDocumentTitle(
     "Campus & Academic Life Gallery | Srimanasa Academy",
-    "Explore our classrooms, STEM laboratories, library reading pods, annual convocations, and student life at Srimanasa Educational Academy."
+    "Explore our classrooms, digital learning lab, STEM laboratories, library reading pods, and student sessions at Srimanasa Educational Academy in Chennai."
   );
 
   const [activeCategory, setActiveCategory] = useState('All');
@@ -49,26 +52,60 @@ export default function Gallery() {
 
   // Lightbox state
   const [activeItemIndex, setActiveItemIndex] = useState(null);
+  const [isPlayingVideo, setIsPlayingVideo] = useState(false);
   const lightboxRef = useRef(null);
+  const touchStartX = useRef(null);
+  const touchStartY = useRef(null);
 
   const activeItem = activeItemIndex !== null ? items[activeItemIndex] : null;
 
   const openLightbox = (index) => {
     setActiveItemIndex(index);
+    setIsPlayingVideo(false);
   };
 
   const closeLightbox = () => {
     setActiveItemIndex(null);
+    setIsPlayingVideo(false);
   };
 
   const handleNext = () => {
     if (activeItemIndex === null || items.length === 0) return;
+    setIsPlayingVideo(false);
     setActiveItemIndex((prev) => (prev + 1) % items.length);
   };
 
   const handlePrev = () => {
     if (activeItemIndex === null || items.length === 0) return;
+    setIsPlayingVideo(false);
     setActiveItemIndex((prev) => (prev - 1 + items.length) % items.length);
+  };
+
+  // Mobile swipe gestures
+  const handleTouchStart = (e) => {
+    if (e.touches && e.touches.length > 0) {
+      touchStartX.current = e.touches[0].clientX;
+      touchStartY.current = e.touches[0].clientY;
+    }
+  };
+
+  const handleTouchEnd = (e) => {
+    if (touchStartX.current === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const touchEndY = e.changedTouches[0].clientY;
+    const diffX = touchStartX.current - touchEndX;
+    const diffY = touchStartY.current - touchEndY;
+
+    // Detect horizontal swipe if delta X is dominant
+    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 45) {
+      if (diffX > 0) {
+        handleNext();
+      } else {
+        handlePrev();
+      }
+    }
+    touchStartX.current = null;
+    touchStartY.current = null;
   };
 
   // Keyboard navigation for Lightbox
@@ -96,6 +133,12 @@ export default function Gallery() {
     };
   }, [activeItemIndex, items.length]);
 
+  const pageContent = gallerySectionsContent?.galleryPage || {
+    eyebrow: "PHOTO ARCHIVE · ASHOK NAGAR CAMPUS",
+    title: "Inside Srimanasa Academy",
+    intro: "Step inside our modern lecture rooms, reference reading halls, science workshops, and annual ranker felicitation ceremonies in Chennai."
+  };
+
   return (
     <PageLayout>
       {/* Header Banner */}
@@ -104,13 +147,13 @@ export default function Gallery() {
         <Container className="relative z-10">
           <div className="max-w-3xl">
             <span className="text-xs font-semibold text-terracotta-700 uppercase tracking-widest block mb-2">
-              PHOTO ARCHIVE · ASHOK NAGAR CAMPUS
+              {pageContent.eyebrow}
             </span>
             <h1 className="text-3xl sm:text-5xl font-serif font-normal tracking-tight text-primary-950 mb-4">
-              Inside Srimanasa Academy
+              {pageContent.title}
             </h1>
             <p className="text-base sm:text-lg text-neutral-700 leading-relaxed">
-              Step inside our modern lecture rooms, reference reading halls, science workshops, and annual ranker felicitation ceremonies in Chennai.
+              {pageContent.intro}
             </p>
           </div>
         </Container>
@@ -163,7 +206,7 @@ export default function Gallery() {
             onAction={() => setActiveCategory('All')}
           />
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {items.map((item, idx) => {
               const IconComponent = ICON_MAP[item.theme?.iconType] || BookOpen;
 
@@ -190,8 +233,13 @@ export default function Gallery() {
                       <img
                         src={item.image}
                         alt={item.altText || item.title}
+                        width={item.width || 1024}
+                        height={item.height || 768}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        loading="lazy"
+                        loading={idx === 0 ? "eager" : "lazy"}
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                        }}
                       />
                     ) : (
                       <div className={`w-full h-full bg-gradient-to-br ${item.theme.gradient} flex items-center justify-center`}>
@@ -214,8 +262,17 @@ export default function Gallery() {
                         {item.category}
                       </span>
                       <span className="flex items-center gap-1 text-[11px] bg-white/20 hover:bg-white/30 px-2 py-0.5 rounded backdrop-blur-sm transition-colors text-white font-medium">
-                        <Maximize2 className="w-3 h-3" aria-hidden="true" />
-                        View
+                        {item.videoUrl || item.youtubeId ? (
+                          <>
+                            <Play className="w-3 h-3 fill-current" aria-hidden="true" />
+                            Watch
+                          </>
+                        ) : (
+                          <>
+                            <Maximize2 className="w-3 h-3" aria-hidden="true" />
+                            View
+                          </>
+                        )}
                       </span>
                     </div>
                   </div>
@@ -238,14 +295,17 @@ export default function Gallery() {
         )}
       </Section>
 
-      {/* Accessible Fullscreen Lightbox Modal */}
+      {/* Accessible Fullscreen Lightbox Modal with Swipe & Video Support */}
       {activeItem && (
         <div
           ref={lightboxRef}
           className="fixed inset-0 z-50 flex items-center justify-center bg-primary-950/95 backdrop-blur-md p-4 sm:p-6"
           role="dialog"
           aria-modal="true"
-          aria-label={`Image viewer: ${activeItem.title}`}
+          aria-label={`Media viewer: ${activeItem.title}`}
+          onClick={closeLightbox}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
         >
           {/* Close button */}
           <button
@@ -289,13 +349,42 @@ export default function Gallery() {
             onClick={(e) => e.stopPropagation()}
           >
             {/* Visual Canvas */}
-            <div className="w-full h-80 sm:h-96 relative bg-neutral-950 flex items-center justify-center overflow-hidden">
-              {activeItem.image ? (
-                <img
-                  src={activeItem.image}
-                  alt={activeItem.altText || activeItem.title}
-                  className="w-full h-full object-cover"
+            <div className="w-full h-80 sm:h-96 md:h-[460px] relative bg-neutral-950 flex items-center justify-center overflow-hidden">
+              {activeItem.youtubeId && isPlayingVideo ? (
+                <iframe
+                  src={`https://www.youtube-nocookie.com/embed/${activeItem.youtubeId}?autoplay=1&mute=0&rel=0`}
+                  title={activeItem.title}
+                  className="w-full h-full border-0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
                 />
+              ) : activeItem.videoUrl && isPlayingVideo ? (
+                <video
+                  src={activeItem.videoUrl}
+                  controls
+                  playsInline
+                  className="w-full h-full object-contain bg-black"
+                />
+              ) : activeItem.image ? (
+                <div className="relative w-full h-full flex items-center justify-center">
+                  <img
+                    src={activeItem.image}
+                    alt={activeItem.altText || activeItem.title}
+                    width={activeItem.width || 1024}
+                    height={activeItem.height || 768}
+                    className="w-full h-full object-contain"
+                  />
+                  {(activeItem.youtubeId || activeItem.videoUrl) && (
+                    <button
+                      type="button"
+                      onClick={() => setIsPlayingVideo(true)}
+                      className="absolute inset-0 m-auto w-16 h-16 rounded-full bg-primary-900/90 text-white flex items-center justify-center shadow-xl hover:scale-110 transition-transform"
+                      aria-label={`Play video: ${activeItem.title}`}
+                    >
+                      <Play className="w-8 h-8 fill-current ml-1" aria-hidden="true" />
+                    </button>
+                  )}
+                </div>
               ) : (
                 <div className={`w-full h-full bg-gradient-to-br ${activeItem.theme.gradient} flex flex-col items-center justify-center p-8 text-center`}>
                   {(() => {
@@ -312,7 +401,7 @@ export default function Gallery() {
 
               <div className="absolute bottom-4 left-6 right-6 text-white pointer-events-none">
                 <span className="text-[11px] uppercase tracking-widest text-terracotta-300 font-bold mb-1 block">
-                  {activeItem.theme.tag} • {activeItem.year}
+                  {activeItem.theme?.tag || activeItem.category} • {activeItem.year}
                 </span>
                 <h2 className="text-xl sm:text-2xl font-serif font-normal text-white max-w-xl">
                   {activeItem.title}

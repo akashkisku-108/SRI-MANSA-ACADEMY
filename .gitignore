@@ -29,3 +29,6 @@ dist-ssr
 .env.local
 backend/.env
 backend/.env.local
+
+# Archived media removed from website
+removed-media/

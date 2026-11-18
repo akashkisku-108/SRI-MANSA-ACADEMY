@@ -1,4 +1,4 @@
-import { faculty } from '../data/faculty';
+import { faculty, leadershipFaculty, teachingFaculty } from '../data/faculty';
 
 /**
  * Faculty Service Layer
@@ -12,6 +12,24 @@ export const facultyService = {
   async getAll() {
     await new Promise((resolve) => setTimeout(resolve, 300));
     return [...faculty];
+  },
+
+  /**
+   * Fetch senior faculty & leadership members.
+   * @returns {Promise<typeof leadershipFaculty>}
+   */
+  async getLeadership() {
+    await new Promise((resolve) => setTimeout(resolve, 250));
+    return [...leadershipFaculty];
+  },
+
+  /**
+   * Fetch teaching faculty members.
+   * @returns {Promise<typeof teachingFaculty>}
+   */
+  async getTeaching() {
+    await new Promise((resolve) => setTimeout(resolve, 250));
+    return [...teachingFaculty];
   },
 
   /**

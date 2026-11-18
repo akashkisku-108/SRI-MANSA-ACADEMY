@@ -12,7 +12,7 @@ const NAV_LINKS = [
   { name: 'Programs', path: '/courses', isLocked: true },
   { name: 'Faculty', path: '/faculty', isLocked: false },
   { name: 'Results', path: '/results', isLocked: true },
-  { name: 'Gallery', path: '/gallery', isLocked: true },
+  { name: 'Gallery', path: '/gallery', isLocked: false },
   { name: 'Contact', path: '/contact', isLocked: false },
 ];
 

@@ -8,6 +8,8 @@ import { SectionHeading } from '../components/ui/SectionHeading';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
 import { Container } from '../components/ui/Container';
+import { InteractiveCard } from '../components/ui/InteractiveCard';
+import { gallerySectionsContent } from '../data/gallery';
 
 export default function About() {
   useDocumentTitle(
@@ -228,6 +230,110 @@ export default function About() {
               </div>
             ))}
           </div>
+        </div>
+      </Section>
+
+      {/* 5. Campus Facilities & Infrastructure */}
+      <Section background="white">
+        <SectionHeading
+          eyebrow={gallerySectionsContent.aboutFacilities.eyebrow}
+          title={gallerySectionsContent.aboutFacilities.title}
+          description={gallerySectionsContent.aboutFacilities.intro}
+        />
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <InteractiveCard
+            className="h-full"
+            innerClassName="rounded-card overflow-hidden border border-neutral-200/90 shadow-card bg-neutral-100 flex flex-col justify-between h-full"
+          >
+            <div className="relative aspect-[4/3] overflow-hidden bg-neutral-900">
+              <img
+                src="/images/gallery/computer-lab-front-session.jpg"
+                alt="Students seated at desktop computer workstations listening to instructors standing at the front display screen"
+                width={1024}
+                height={768}
+                className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                loading="lazy"
+              />
+            </div>
+            <div className="p-4 bg-white border-t border-neutral-200">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-terracotta-700 block mb-1">
+                Computer Laboratory
+              </span>
+              <h3 className="font-serif font-bold text-sm text-primary-950 mb-1">
+                Digital Classroom & Lab
+              </h3>
+              <p className="text-xs text-neutral-600">
+                Students attending an orientation in the computer lab.
+              </p>
+            </div>
+          </InteractiveCard>
+
+          <InteractiveCard
+            className="h-full"
+            innerClassName="rounded-card overflow-hidden border border-neutral-200/90 shadow-card bg-neutral-100 flex flex-col justify-between h-full"
+          >
+            <div className="relative aspect-[4/3] overflow-hidden bg-neutral-900">
+              <img
+                src="/images/gallery/interactive-session-instruction.jpg"
+                alt="Instructor speaking beside a large wall display in a classroom with computer terminals"
+                width={1024}
+                height={768}
+                className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                loading="lazy"
+              />
+            </div>
+            <div className="p-4 bg-white border-t border-neutral-200">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-terracotta-700 block mb-1">
+                Smart Instruction
+              </span>
+              <h3 className="font-serif font-bold text-sm text-primary-950 mb-1">
+                Interactive Display Guidance
+              </h3>
+              <p className="text-xs text-neutral-600">
+                Instructor addressing students during a classroom session.
+              </p>
+            </div>
+          </InteractiveCard>
+
+          <InteractiveCard
+            className="h-full"
+            innerClassName="rounded-card overflow-hidden border border-neutral-200/90 shadow-card bg-neutral-100 flex flex-col justify-between h-full"
+          >
+            <div className="relative aspect-[4/3] overflow-hidden bg-neutral-900">
+              <img
+                src="/about-campus.jpg"
+                alt="Dedicated reference study library with book shelves and study cubicles"
+                width={1200}
+                height={800}
+                className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                loading="lazy"
+              />
+            </div>
+            <div className="p-4 bg-white border-t border-neutral-200">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-terracotta-700 block mb-1">
+                Study Environment
+              </span>
+              <h3 className="font-serif font-bold text-sm text-primary-950 mb-1">
+                Reference Reading Library
+              </h3>
+              <p className="text-xs text-neutral-600">
+                Quiet study environment for deep concentration and reference research.
+              </p>
+            </div>
+          </InteractiveCard>
+        </div>
+
+        <div className="mt-8 text-center">
+          <Button
+            as={Link}
+            to="/gallery"
+            variant="secondary"
+            size="sm"
+            rightIcon={ArrowRight}
+          >
+            Explore Full Campus Gallery
+          </Button>
         </div>
       </Section>
 
